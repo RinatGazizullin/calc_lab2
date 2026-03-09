@@ -31,7 +31,7 @@ class HalfSolver : SingleSolver {
                 b = x
             }
             x = calculateMiddle(a, b)
-        } while ((equation.calculate(a) - equation.calculate(b)).abs() < epsilon)
+        } while ((equation.calculate(a) - equation.calculate(b)).abs() > epsilon)
 
         return x
     }
