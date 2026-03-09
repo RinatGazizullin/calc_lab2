@@ -19,9 +19,7 @@ class NewtonSolver : SingleSolver {
         right: BigDecimal,
         epsilon: BigDecimal
     ): BigDecimal {
-        val a = left
-        val b = right
-        var x = if (equation.calculate(a) * equation.secondDerivative(a) > BigDecimal.ZERO) a else b
+        var x = if (equation.calculate(left) * equation.secondDerivative(left) > BigDecimal.ZERO) left else right
 
         do {
             x = calculateNew(equation, x)
