@@ -35,10 +35,8 @@ class Equation(private val equation: SimpleEquation) {
         val dLeft = derivative(x - EPSILON)
         val dCenter = derivative(x)
 
-        val diffLeft = (dCenter - dLeft).divide(EPSILON, MathContext.DECIMAL128)
-        val diffRight = (dRight - dCenter).divide(EPSILON, MathContext.DECIMAL128)
-
-        if ((diffLeft - diffRight).abs() > CHECK_DERIVATIVE) {
+        if (((dCenter - dLeft).divide(EPSILON, MathContext.DECIMAL128)
+                    - (dRight - dCenter).divide(EPSILON, MathContext.DECIMAL128)).abs() > CHECK_DERIVATIVE) {
             throw EquationException(DERIVATIVE_DOUBLE_ERROR)
         }
 
