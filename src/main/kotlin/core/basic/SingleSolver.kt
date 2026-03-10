@@ -10,8 +10,8 @@ interface SingleSolver {
 
     companion object {
         private const val STEPS: Long = 100
-        private const val ENOUGH_ERROR = "Достаточное условие невыполнено"
-        private const val NECESSARY_ERROR = "Необходимое условие невыполнено"
+        private const val ENOUGH_ERROR = "Достаточное условие не выполнено"
+        private const val NECESSARY_ERROR = "Необходимое условие не выполнено"
         private const val LEFT_ERROR = "Левая граница не может быть больше правой"
     }
 

@@ -68,7 +68,6 @@ class ExpressionProcessor {
         }
     }
 
-
     fun calculate(params: Map<String, BigDecimal>): Vector {
         checkTokens()
         val result = Vector.empty(size)
