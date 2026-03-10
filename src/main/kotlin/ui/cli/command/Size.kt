@@ -1,9 +1,10 @@
 package ui.cli.command
 
+import core.processor.ExpressionProcessor
 import ui.cli.basic.Command
 import ui.cli.basic.HaveManual
 
-class Size : Command(Type.SIZE) {
+class Size(private val expressionProcessor: ExpressionProcessor) : Command(Type.SIZE) {
     override val manual: String
 
     init {

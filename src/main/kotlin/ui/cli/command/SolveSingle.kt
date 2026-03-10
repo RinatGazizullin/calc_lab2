@@ -1,11 +1,12 @@
 package ui.cli.command
 
+import core.processor.ExpressionProcessor
 import core.utils.TextUtils
 import ui.cli.basic.Command
 import ui.cli.basic.HaveManual
 import java.math.BigDecimal
 
-class SolveSingle : Command(Type.SOLVE_SINGLE) {
+class SolveSingle(private val expressionProcessor: ExpressionProcessor) : Command(Type.SOLVE_SINGLE) {
     override val manual: String
 
     init {

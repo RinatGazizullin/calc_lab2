@@ -1,9 +1,10 @@
 package ui.cli.command
 
+import core.processor.ExpressionProcessor
 import ui.cli.basic.Command
 import ui.cli.basic.HaveManual
 
-class SolveSystem : Command(Type.SOLVE_SYSTEM) {
+class SolveSystem(private val expressionProcessor: ExpressionProcessor) : Command(Type.SOLVE_SYSTEM) {
     override val manual: String
 
     init {

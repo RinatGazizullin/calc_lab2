@@ -1,9 +1,10 @@
 package ui.cli.command
 
+import core.processor.ExpressionProcessor
 import ui.cli.basic.Command
 import ui.cli.basic.HaveManual
 
-class Build : Command(Type.BUILD) {
+class Build(private val expressionProcessor: ExpressionProcessor) : Command(Type.BUILD) {
     override val manual: String
 
     init {

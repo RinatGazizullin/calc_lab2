@@ -1,9 +1,10 @@
 package ui.cli.command
 
+import core.processor.ExpressionProcessor
 import ui.cli.basic.Command
 import ui.cli.basic.HaveManual
 
-class Show : Command(Type.SHOW) {
+class Show(private val expressionProcessor: ExpressionProcessor) : Command(Type.SHOW) {
     override val manual: String
 
     init {
