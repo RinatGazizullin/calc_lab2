@@ -7,7 +7,7 @@ import core.utils.Examples
 import java.math.BigDecimal
 
 class ExpressionProcessor {
-    private val tokens: MutableSet<String> = mutableSetOf()
+    val tokens: MutableSet<String> = mutableSetOf()
     val exps: MutableList<Expression> = mutableListOf(Examples.quickExample())
     var size: Int = exps.size
 

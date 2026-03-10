@@ -1,7 +1,7 @@
 package core.solver
 
 import core.basic.SingleSolver
-import core.exception.EnumException
+import core.exception.ExpressionException
 import core.model.Expression
 import java.math.BigDecimal
 import java.math.MathContext
@@ -40,7 +40,7 @@ class IterationSolver : SingleSolver {
             phi.derivative(left + step * BigDecimal.valueOf(index), token).abs() }
 
         if (q - BigDecimal.ONE >= CHECK_DERIVATIVE) {
-            throw EnumException(ENOUGH_ERROR)
+            throw ExpressionException(ENOUGH_ERROR)
         }
 
         var x = (left + right) / BigDecimal.valueOf(2)
