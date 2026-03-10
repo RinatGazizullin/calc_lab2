@@ -16,6 +16,9 @@ class Show(private val expressionProcessor: ExpressionProcessor) : Command(Type.
     }
 
     override fun execute(arguments: Arguments): Result {
-        TODO("Not yet implemented")
+        var counter = 1
+        return Result(IntRange(0, expressionProcessor.size - 1).joinToString("\n") { index ->
+            "${counter++}) f(...) = ${expressionProcessor.exps[index].body}"
+        }, Result.Code.GOOD)
     }
 }

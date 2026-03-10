@@ -18,7 +18,7 @@ class Set(
         private const val MIN_ARGS = 1
         private const val ARGUMENT_NAME = "<index>"
         private const val NO_ARGS_MESSAGE = "Не был введен аргумент $ARGUMENT_NAME"
-        private const val GOOD_MESSAGE = "СНУ (Систему нелинейных уравнений) изменена!"
+        private const val GOOD_MESSAGE = "СНУ (Система нелинейных уравнений) изменена!"
         private const val FORMAT_MESSAGE = "Значение $ARGUMENT_NAME должно быть числом"
         private const val ARGUMENT_DESCRIPTION = "Индекс НУ (нелинейного уравнения)"
     }

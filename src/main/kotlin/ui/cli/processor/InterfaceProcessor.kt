@@ -5,8 +5,11 @@ class InterfaceProcessor {
         return readln()
     }
 
-    fun renderMessage(message: String) {
-        println(message)
+    fun renderMessage(message: String, newLine: Boolean = true) {
+        if (newLine)
+            println(message)
+        else
+            print(message)
     }
 
     fun renderError(message: String) {

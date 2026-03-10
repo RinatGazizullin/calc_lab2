@@ -1,9 +1,11 @@
 package ui.cli.processor
 
+import core.parser.ExpressionParser
 import ui.cli.basic.Command
 
 class CommandLineProcessor(private val interfaceProcessor: InterfaceProcessor) {
     companion object {
+        private const val START = "Для вывода команд введите help!"
         private const val NO_COMMAND_ERROR = "Команда <%s> не была найдена"
         private const val MODE_ERROR = "Команда <%s> недоступна в данном режиме"
     }
@@ -11,6 +13,7 @@ class CommandLineProcessor(private val interfaceProcessor: InterfaceProcessor) {
     private val dataProcessor = DataProcessor(interfaceProcessor)
 
     fun start() {
+        interfaceProcessor.renderMessage(START)
         while (true) {
             val line = interfaceProcessor.readLine().trim()
             if (line.isNotEmpty()) {
