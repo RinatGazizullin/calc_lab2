@@ -39,7 +39,7 @@ class SolveSingle(
 
         if (arguments.args.size == ARGS_COUNT) {
             try {
-                index = TextUtils.prepare(arguments.args[0]).toInt()
+                index = TextUtils.prepare(arguments.args[0]).toInt() - 1
             } catch (e: NumberFormatException) {
                 return Result(
                     String.format(ARGS_ERROR, arguments.args[0]), Result.Code.ERROR
@@ -87,6 +87,6 @@ class SolveSingle(
             }
         }
 
-        return Result(builder.toString(), Result.Code.GOOD)
+        return Result(result.toString(), Result.Code.GOOD)
     }
 }
