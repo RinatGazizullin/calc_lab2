@@ -8,7 +8,7 @@ class Exit : Command(Type.EXIT) {
 
     init {
         val builder = StringBuilder()
-        builder.append(HaveManual.ManualBuilder.name(type.name))
+        builder.append(HaveManual.ManualBuilder.name(type.value))
         builder.append(HaveManual.ManualBuilder.description(type.description))
         builder.append(HaveManual.ManualBuilder.noArguments())
         manual = builder.toString()

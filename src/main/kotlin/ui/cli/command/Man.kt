@@ -8,7 +8,7 @@ class Man(private val commands: Map<Type, Command>) : Command(Type.MAN) {
 
     init {
         val builder = StringBuilder()
-        builder.append(HaveManual.ManualBuilder.name(type.name))
+        builder.append(HaveManual.ManualBuilder.name(type.value))
         builder.append(HaveManual.ManualBuilder.description(type.description))
         builder.append(HaveManual.ManualBuilder.arguments(ARGUMENT_NAME, ARGUMENT_DESCRIPTION))
         manual = builder.toString()
@@ -20,7 +20,7 @@ class Man(private val commands: Map<Type, Command>) : Command(Type.MAN) {
         private const val TYPE_ERROR = "Команда <%s> не была обнаружена"
         private const val MODE_ERROR = "Команда <%s> недоступна в этом режиме"
         private const val NO_ARGS_ERROR = "Необходимо ввести один аргумент <command>"
-        private const val ARGUMENT_DESCRIPTION = "имя команды, для которого нужно описание"
+        private const val ARGUMENT_DESCRIPTION = "Имя команды, для которого нужно описание"
     }
 
     override fun execute(arguments: Arguments): Result {

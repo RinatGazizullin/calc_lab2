@@ -11,7 +11,7 @@ class SolveSingle(private val expressionProcessor: ExpressionProcessor) : Comman
 
     init {
         val builder = StringBuilder()
-        builder.append(HaveManual.ManualBuilder.name(type.name))
+        builder.append(HaveManual.ManualBuilder.name(type.value))
         builder.append(HaveManual.ManualBuilder.description(type.description))
         builder.append(HaveManual.ManualBuilder.arguments(ARGUMENT_NAME, ARGUMENT_DESCRIPTION))
         manual = builder.toString()
@@ -21,7 +21,7 @@ class SolveSingle(private val expressionProcessor: ExpressionProcessor) : Comman
         private const val ARGS_COUNT = 3
         private const val ARGS_ERROR = "Аргументы должны быть числами"
         private const val ARGUMENT_NAME = "<left>, <right>, <accuracy>"
-        private const val ARGUMENT_DESCRIPTION = "границы поиска решения, необходимая точность"
+        private const val ARGUMENT_DESCRIPTION = "Границы поиска решения, необходимая точность"
         private const val NO_ARGS_ERROR = "Необходимо ввести три аргумента <left>, <right>, <accuracy>"
     }
 
