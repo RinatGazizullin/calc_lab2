@@ -33,12 +33,12 @@ abstract class Command(val type: Type) : HaveManual {
             private const val NO_ENUM_ERROR = "Неверное имя"
 
             fun canString(type: String) : Boolean {
-                return Type.entries.find { entity -> entity.value == type } != null
+                return Type.entries.find { entity -> entity.value == type.lowercase() } != null
             }
 
             fun fromString(type: String): Type {
                 try {
-                    return Type.entries.first { entity -> entity.value == type }
+                    return Type.entries.first { entity -> entity.value == type.lowercase() }
                 } catch (e: IllegalArgumentException) {
                     throw EnumException(NO_ENUM_ERROR)
                 }
