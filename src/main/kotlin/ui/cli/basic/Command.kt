@@ -17,23 +17,17 @@ abstract class Command(val type: Type) : HaveManual {
 
     enum class Type(
         val value: String,
-        override val description: String,
-        val type: Manager.Mode,
+        override val description: String
     ) : HaveDescription {
-        SIZE("size", "Задать количество НУ (нелинейных уравнений) в системе", Manager.Mode.SYSTEM),
-        SOLVE_SYSTEM("solve", "Решить СНУ (систему нелинейных уравнений)", Manager.Mode.SYSTEM),
-        BUILD("build", "Ввести новую СНУ (систему нелинейных уравнений)", Manager.Mode.SYSTEM),
-        SHOW_SYSTEM("show", "Показать СНУ (систему нелинейных уравнений)", Manager.Mode.SYSTEM),
-        SET_SYSTEM("set", "Ввести НУ (нелинейное уравнение)", Manager.Mode.SYSTEM),
-
-        MAN("man", "Вывести мануал команды <command>", Manager.Mode.BOTH),
-        EXIT("exit", "Завершить работу приложения", Manager.Mode.BOTH),
-        HELP("help", "Вывести справку по командам", Manager.Mode.BOTH),
-        SWITCH("switch", "Сменить режим (СНУ/НУ)", Manager.Mode.BOTH),
-
-        SHOW_SINGLE("show", "Показать НУ (нелинейное уравнение)", Manager.Mode.SINGLE),
-        SOLVE_SINGLE("solve", "Решить НУ (нелинейное уравнение)", Manager.Mode.SINGLE),
-        SET_SINGLE("set", "Ввести НУ (нелинейное уравнение)", Manager.Mode.SINGLE);
+        BUILD("build", "Ввести новую СНУ (систему нелинейных уравнений)"),
+        EXIT("exit", "Завершить работу приложения"),
+        HELP("help", "Вывести справку по командам"),
+        MAN("man", "Вывести мануал команды <command>"),
+        SET("set", "Ввести НУ (нелинейное уравнение)"),
+        SHOW("show", "Показать СНУ (систему нелинейных уравнений)"),
+        SIZE("size", "Задать количество НУ (нелинейных уравнений) в системе"),
+        SOLVE_SINGLE("equation", "Решить НУ (нелинейное уравнение)>"),
+        SOLVE_SYSTEM("system", "Решить СНУ (систему нелинейных уравнений)");
 
         companion object {
             private const val NO_ENUM_ERROR = "Неверное имя"
