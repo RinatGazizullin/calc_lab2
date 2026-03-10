@@ -12,16 +12,17 @@ class ExpressionBuilder(
     private val interfaceProcessor: InterfaceProcessor,
 ) : CanBuild<Expression> {
     companion object {
-        private const val EXAMPLE = "f(...) = "
+        private const val EXAMPLE = "f(%s) = "
         private const val INTRO_MESSAGE = "Введите функцию!"
         private const val BUILDER_ERROR = "Не удалось получить новую функцию"
     }
 
-    override fun build(size: Int): Expression {
+    override fun build(tokens: Set<String>): Expression {
         for (i in 1..MAX_COUNT) {
             interfaceProcessor.renderMessage(INTRO_MESSAGE)
             try {
-                interfaceProcessor.renderMessage(EXAMPLE, false)
+                interfaceProcessor.renderMessage(String.format(EXAMPLE,
+                    tokens.joinToString(", ")), false)
                 return ExpressionParser.parse(interfaceProcessor.readLine())
             } catch (e: ExpressionException) {
                 interfaceProcessor.renderError(e.message!!)

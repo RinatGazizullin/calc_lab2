@@ -39,7 +39,7 @@ class Set(
                 val index = arguments.args[0].toInt() - 1
                 expressionProcessor.checkIndex(index)
                 expressionProcessor.changeExpression(builder
-                    .build(expressionProcessor.size), index)
+                    .build(expressionProcessor.tokens), index)
                 return Result(GOOD_MESSAGE, Result.Code.GOOD)
             } catch (e: NumberFormatException) {
                 return Result(FORMAT_MESSAGE, Result.Code.ERROR)

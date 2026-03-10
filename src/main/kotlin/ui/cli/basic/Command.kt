@@ -26,7 +26,7 @@ abstract class Command(val type: Type) : HaveManual {
         SET("set", "Ввести НУ (нелинейное уравнение)"),
         SHOW("show", "Показать СНУ (систему нелинейных уравнений)"),
         SIZE("size", "Задать количество НУ (нелинейных уравнений) в системе"),
-        SOLVE_SINGLE("equation", "Решить НУ (нелинейное уравнение)"),
+        SOLVE_SINGLE("single", "Решить НУ (нелинейное уравнение)"),
         SOLVE_SYSTEM("system", "Решить СНУ (систему нелинейных уравнений)");
 
         companion object {
