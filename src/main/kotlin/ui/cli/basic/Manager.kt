@@ -1,7 +1,6 @@
 package ui.cli.basic
 
 import core.exception.EnumException
-import ui.cli.basic.Command.Type
 
 interface Manager {
     val commands: Map<Command.Type, Command>
