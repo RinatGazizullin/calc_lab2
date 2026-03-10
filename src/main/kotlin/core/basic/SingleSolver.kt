@@ -1,6 +1,7 @@
 package core.basic
 
 import core.exception.ExpressionException
+import core.exception.SolveException
 import core.model.Expression
 import java.math.BigDecimal
 import java.math.MathContext
@@ -30,11 +31,11 @@ interface SingleSolver {
         token: String
     ) {
         if (left >= right) {
-            throw ExpressionException(LEFT_ERROR)
+            throw SolveException(LEFT_ERROR)
         }
 
         if (expression.calculate(left, token).multiply(expression.calculate(right, token)) >= BigDecimal.ZERO) {
-            throw ExpressionException(NECESSARY_ERROR)
+            throw SolveException(NECESSARY_ERROR)
         }
 
         val step = right.add(left.negate()).divide(BigDecimal.valueOf(STEPS), MathContext.DECIMAL128)
@@ -44,7 +45,7 @@ interface SingleSolver {
             val now = expression.derivative(left + step * BigDecimal.valueOf(i + 1), token) >= BigDecimal.ZERO
 
             if (pre != now) {
-                throw ExpressionException(ENOUGH_ERROR)
+                throw SolveException(ENOUGH_ERROR)
             }
         }
     }

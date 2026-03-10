@@ -67,7 +67,7 @@ class Expression(
     }
 
     private fun checkTokens(params: Map<String, BigDecimal>) {
-        if (tokens.any { elem -> params.containsKey(elem) }) {
+        if (tokens.any { elem -> !params.containsKey(elem) }) {
             throw ExpressionException(TOKEN_ERROR)
         }
     }

@@ -20,6 +20,7 @@ class NewtonSolver : SingleSolver {
         epsilon: BigDecimal,
         token: String
     ): BigDecimal {
+        verify(expression, left, right, token)
         var x =
             if (expression.calculate(left, token) * expression.secondDerivative(left, token) > BigDecimal.ZERO)
                 left
