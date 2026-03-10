@@ -32,18 +32,13 @@ abstract class Command(val type: Type) : HaveManual {
         companion object {
             private const val NO_ENUM_ERROR = "Неверное имя"
 
-            fun canString(mode: String) : Boolean {
-                try {
-                    Type.valueOf(mode.uppercase())
-                    return true
-                } catch (e: IllegalArgumentException) {
-                    return false
-                }
+            fun canString(type: String) : Boolean {
+                return Type.entries.find { entity -> entity.value == type } != null
             }
 
-            fun fromString(mode: String): Type {
+            fun fromString(type: String): Type {
                 try {
-                    return Type.valueOf(mode.uppercase())
+                    return Type.entries.first { entity -> entity.value == type }
                 } catch (e: IllegalArgumentException) {
                     throw EnumException(NO_ENUM_ERROR)
                 }
