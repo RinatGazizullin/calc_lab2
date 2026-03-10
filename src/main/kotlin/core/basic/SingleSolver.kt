@@ -1,7 +1,7 @@
 package core.basic
 
-import core.exception.EquationException
-import core.model.Equation
+import core.exception.ExpressionException
+import core.model.Expression
 import java.math.BigDecimal
 import java.math.MathContext
 
@@ -15,25 +15,36 @@ interface SingleSolver {
         private const val LEFT_ERROR = "Левая граница не может быть больше правой"
     }
 
-    fun solve(equation: Equation, left: BigDecimal, right: BigDecimal, epsilon: BigDecimal): BigDecimal
+    fun solve(
+        expression: Expression,
+        left: BigDecimal,
+        right: BigDecimal,
+        epsilon: BigDecimal,
+        token: String
+    ): BigDecimal
 
-    fun verify(equation: Equation, left: BigDecimal, right: BigDecimal) {
+    fun verify(
+        expression: Expression,
+        left: BigDecimal,
+        right: BigDecimal,
+        token: String
+    ) {
         if (left >= right) {
-            throw EquationException(LEFT_ERROR)
+            throw ExpressionException(LEFT_ERROR)
         }
 
-        if (equation.calculate(left).multiply(equation.calculate(right)) >= BigDecimal.ZERO) {
-            throw EquationException(NECESSARY_ERROR)
+        if (expression.calculate(left, token).multiply(expression.calculate(right, token)) >= BigDecimal.ZERO) {
+            throw ExpressionException(NECESSARY_ERROR)
         }
 
         val step = right.add(left.negate()).divide(BigDecimal.valueOf(STEPS), MathContext.DECIMAL128)
 
         for (i in 0..STEPS) {
-            val pre = equation.derivative(left.add(step.multiply(BigDecimal.valueOf(i)))) >= BigDecimal.ZERO
-            val now = equation.derivative(left.add(step.multiply(BigDecimal.valueOf(i + 1)))) >= BigDecimal.ZERO
+            val pre = expression.derivative(left + step * BigDecimal.valueOf(i), token) >= BigDecimal.ZERO
+            val now = expression.derivative(left + step * BigDecimal.valueOf(i + 1), token) >= BigDecimal.ZERO
 
             if (pre != now) {
-                throw EquationException(ENOUGH_ERROR)
+                throw ExpressionException(ENOUGH_ERROR)
             }
         }
     }

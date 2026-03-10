@@ -1,7 +1,7 @@
 package core.solver
 
 import core.basic.SingleSolver
-import core.model.Equation
+import core.model.Expression
 import java.math.BigDecimal
 
 class HalfSolver : SingleSolver {
@@ -14,24 +14,25 @@ class HalfSolver : SingleSolver {
     }
 
     override fun solve(
-        equation: Equation,
+        expression: Expression,
         left: BigDecimal,
         right: BigDecimal,
-        epsilon: BigDecimal
+        epsilon: BigDecimal,
+        token: String
     ): BigDecimal {
-        verify(equation, left, right)
+        verify(expression, left, right, token)
         var a = left
         var b = right
         var x = calculateMiddle(a, b)
 
         do {
-            if (equation.calculate(x) * equation.calculate(b) < BigDecimal.ZERO) {
+            if (expression.calculate(x, token) * expression.calculate(b, token) < BigDecimal.ZERO) {
                 a = x
             } else {
                 b = x
             }
             x = calculateMiddle(a, b)
-        } while ((equation.calculate(a) - equation.calculate(b)).abs() > epsilon)
+        } while ((expression.calculate(a, token) - expression.calculate(b, token)).abs() > epsilon)
 
         return x
     }
