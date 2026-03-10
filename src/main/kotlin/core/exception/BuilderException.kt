@@ -1,4 +1,3 @@
 package core.exception
 
-class BuilderException {
-}
+class BuilderException(message: String) : Exception(message)

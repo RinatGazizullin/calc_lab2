@@ -8,8 +8,12 @@ import java.math.BigDecimal
 
 class ExpressionProcessor {
     private val tokens: MutableSet<String> = mutableSetOf()
-    val exps: MutableList<Expression> = mutableListOf()
+    val exps: MutableList<Expression> = mutableListOf(Examples.quickExample())
     var size: Int = exps.size
+
+    init {
+        checkTokens()
+    }
 
     companion object {
         private const val MAX_SIZE = 20
@@ -25,11 +29,15 @@ class ExpressionProcessor {
         checkSize()
     }
 
-    fun changeExpression(newExpression: Expression, index: Int) {
-        if (index >= exps.size || index < 0) {
+    fun checkIndex(index: Int) {
+        if (index >= size || index < 0) {
             throw ExpressionException(INDEX_ERROR)
         }
+    }
 
+    fun changeExpression(newExpression: Expression, index: Int) {
+        checkIndex(index)
+        exps[index] = newExpression
         checkSize()
         reCalcTokens()
     }
@@ -76,9 +84,7 @@ class ExpressionProcessor {
     }
 
     fun calculateByIndex(params: Map<String, BigDecimal>, index: Int): BigDecimal {
-        if (index >= exps.size || index < 0) {
-            throw ExpressionException(INDEX_ERROR)
-        }
+        checkIndex(index)
         return exps[index].calculate(params)
     }
 
@@ -90,9 +96,7 @@ class ExpressionProcessor {
     }
 
     fun derivativeByIndex(params: Map<String, BigDecimal>, index: Int): BigDecimal {
-        if (index >= exps.size || index < 0) {
-            throw ExpressionException(INDEX_ERROR)
-        }
+        checkIndex(index)
         return exps[index].derivative(params)
     }
 
@@ -104,9 +108,7 @@ class ExpressionProcessor {
     }
 
     fun secondDerivativeByIndex(params: Map<String, BigDecimal>, index: Int): BigDecimal {
-        if (index >= exps.size || index < 0) {
-            throw ExpressionException(INDEX_ERROR)
-        }
+        checkIndex(index)
         return exps[index].secondDerivative(params)
     }
 }
