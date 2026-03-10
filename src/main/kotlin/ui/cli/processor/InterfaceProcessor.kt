@@ -1,7 +1,8 @@
 package ui.cli.processor
 
 class InterfaceProcessor {
-    fun readLine(): String {
+    fun readLine(message: String = ""): String {
+        if (message.isNotEmpty()) renderMessage(message, false)
         return readln()
     }
 

@@ -1,12 +1,19 @@
 package ui.cli.command
 
+import core.basic.SingleSolver
+import core.exception.ExpressionException
 import core.processor.ExpressionProcessor
 import core.utils.TextUtils
+import ui.cli.basic.CanBuild
 import ui.cli.basic.Command
 import ui.cli.basic.HaveManual
-import java.math.BigDecimal
+import ui.cli.builder.BorderBuilder
 
-class SolveSingle(private val expressionProcessor: ExpressionProcessor) : Command(Type.SOLVE_SINGLE) {
+class SolveSingle(
+    private val expressionProcessor: ExpressionProcessor,
+    private val builder: CanBuild<BorderBuilder.Border>,
+    private val solvers: List<SingleSolver>
+) : Command(Type.SOLVE_SINGLE) {
     override val manual: String
 
     init {
@@ -18,30 +25,68 @@ class SolveSingle(private val expressionProcessor: ExpressionProcessor) : Comman
     }
 
     companion object {
-        private const val ARGS_COUNT = 3
-        private const val ARGS_ERROR = "Аргументы должны быть числами"
-        private const val ARGUMENT_NAME = "<left>, <right>, <accuracy>"
-        private const val ARGUMENT_DESCRIPTION = "Границы поиска решения, необходимая точность"
-        private const val NO_ARGS_ERROR = "Необходимо ввести три аргумента <left>, <right>, <accuracy>"
+        private const val ARGS_COUNT = 1
+        private const val TOKENS_COUNT = 1
+        private const val ARGUMENT_NAME = "<index>"
+        private const val TOKENS_ERROR = "Неверное количество переменных"
+        private const val ARGS_ERROR = "Значение <%s> должно быть числом"
+        private const val ARGUMENT_DESCRIPTION = "Индекс НУ (нелинейного уравнения)"
+        private const val NO_ARGS_ERROR = "Необходимо ввести один аргумент <index>"
     }
 
     override fun execute(arguments: Arguments): Result {
-        val left: BigDecimal
-        val right: BigDecimal
-        val epsilon: BigDecimal
+        val index: Int
 
         if (arguments.args.size == ARGS_COUNT) {
             try {
-                left = TextUtils.prepare(arguments.args[0]).toBigDecimal()
-                right = TextUtils.prepare(arguments.args[1]).toBigDecimal()
-                epsilon = TextUtils.prepare(arguments.args[2]).toBigDecimal()
+                index = TextUtils.prepare(arguments.args[0]).toInt()
             } catch (e: NumberFormatException) {
-                return Result(ARGS_ERROR, Result.Code.ERROR)
+                return Result(
+                    String.format(ARGS_ERROR, arguments.args[0]), Result.Code.ERROR
+                )
             }
         } else {
             return Result(NO_ARGS_ERROR, Result.Code.ERROR)
         }
 
-        TODO("In progress")
+        try {
+            expressionProcessor.checkIndex(index)
+        } catch (e: ExpressionException) {
+            return Result(e.message!!, Result.Code.ERROR)
+        }
+
+        val expression = expressionProcessor.exps[index]
+        val tokens = expression.tokens
+        if (tokens.size != TOKENS_COUNT) {
+            return Result(TOKENS_ERROR, Result.Code.ERROR)
+        }
+
+        val border = builder.build(tokens)
+        val result = StringBuilder()
+        val token = tokens.first()
+        var first = true
+        var counter = 1
+
+        for (solver in solvers) {
+            if (first) first = false else result.appendLine()
+            result.append("${counter++}) ${solver.name}").appendLine()
+            try {
+                result.append(
+                    "$token = ${
+                        solver.solve(
+                            expression,
+                            border.borders[token]!!.first,
+                            border.borders[token]!!.second,
+                            border.epsilon,
+                            token
+                        )
+                    }"
+                )
+            } catch (e: ExpressionException) {
+                result.append(e.message)
+            }
+        }
+
+        return Result(builder.toString(), Result.Code.GOOD)
     }
 }

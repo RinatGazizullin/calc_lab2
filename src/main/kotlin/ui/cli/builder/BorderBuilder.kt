@@ -1,4 +1,80 @@
 package ui.cli.builder
 
-class BorderBuilder {
+import core.exception.BuilderException
+import ui.cli.basic.CanBuild
+import ui.cli.basic.CanBuild.Companion.MAX_COUNT
+import ui.cli.processor.InterfaceProcessor
+import java.math.BigDecimal
+
+class BorderBuilder(
+    private val interfaceProcessor: InterfaceProcessor
+) : CanBuild<BorderBuilder.Border> {
+    companion object {
+        private const val EPSILON = "Введите погрешность - "
+        private const val LEFT = "Введите левую границу для <%s> - "
+        private const val INTRO_MESSAGE = "Введем границы переменных"
+        private const val RIGHT = "Введите правую границу для <%s> - "
+        private const val NUMBER_ERROR = "Значение <%s> должно быть числом"
+        private const val MORE_ERROR = "Левая граница должна быть меньше правой"
+        private const val BUILDER_ERROR = "Не удалось получить границы измерения"
+    }
+
+    override fun build(tokens: Set<String>): Border {
+        interfaceProcessor.renderMessage(INTRO_MESSAGE)
+        val result: MutableMap<String, Pair<BigDecimal, BigDecimal>> = mutableMapOf()
+
+        for (token in tokens) {
+            result[token] = buildToken(token)
+        }
+
+        var epsilon: BigDecimal
+        for (i in 1..MAX_COUNT) {
+            val s = interfaceProcessor.readLine(EPSILON)
+
+            try {
+                epsilon = s.toBigDecimal()
+            } catch (e: NumberFormatException) {
+                interfaceProcessor.renderError(String.format(NUMBER_ERROR, s))
+                continue
+            }
+
+            return Border(result, epsilon)
+        }
+
+        throw BuilderException(BUILDER_ERROR)
+    }
+
+    private fun buildToken(token: String): Pair<BigDecimal, BigDecimal> {
+        var left: BigDecimal
+        var right: BigDecimal
+
+        for (i in 1..MAX_COUNT) {
+            val s1 = interfaceProcessor.readLine(String.format(LEFT, token))
+            val s2 = interfaceProcessor.readLine(String.format(RIGHT, token))
+            try {
+                left = s1.toBigDecimal()
+            } catch (e: NumberFormatException) {
+                interfaceProcessor.renderError(String.format(NUMBER_ERROR, s1))
+                continue
+            }
+            try {
+                right = s2.toBigDecimal()
+            } catch (e: NumberFormatException) {
+                interfaceProcessor.renderError(String.format(NUMBER_ERROR, s2))
+                continue
+            }
+            if (left >= right) {
+                interfaceProcessor.renderError(MORE_ERROR)
+                continue
+            }
+            return Pair(left, right)
+        }
+
+        throw BuilderException(BUILDER_ERROR)
+    }
+
+    class Border(
+        val borders: Map<String, Pair<BigDecimal, BigDecimal>>,
+        val epsilon: BigDecimal
+    )
 }
