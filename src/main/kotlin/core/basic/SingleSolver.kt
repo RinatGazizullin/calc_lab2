@@ -34,7 +34,7 @@ interface SingleSolver {
             throw SolveException(LEFT_ERROR)
         }
 
-        if (expression.calculate(left, token).multiply(expression.calculate(right, token)) >= BigDecimal.ZERO) {
+        if (expression.calculate(left, token) * expression.calculate(right, token) >= BigDecimal.ZERO) {
             throw SolveException(NECESSARY_ERROR)
         }
 
