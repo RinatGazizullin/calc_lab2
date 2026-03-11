@@ -27,7 +27,8 @@ class HalfSolver : SingleSolver {
         var x = calculateMiddle(a, b)
 
         do {
-            if (expression.calculate(x, token) * expression.calculate(b, token) < BigDecimal.ZERO) {
+            if (expression.calculate(x, token).signum()
+                * expression.calculate(b, token).signum() < 0) {
                 a = x
             } else {
                 b = x
