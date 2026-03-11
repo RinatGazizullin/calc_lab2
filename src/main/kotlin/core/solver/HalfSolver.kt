@@ -1,7 +1,9 @@
 package core.solver
 
 import core.basic.SingleSolver
+import core.model.Border
 import core.model.Expression
+import core.model.Result
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
@@ -17,14 +19,12 @@ class HalfSolver : SingleSolver {
 
     override fun solve(
         expression: Expression,
-        left: BigDecimal,
-        right: BigDecimal,
-        epsilon: BigDecimal,
+        border: Border,
         token: String
-    ): BigDecimal {
-        verify(expression, left, right, token)
-        var a = left
-        var b = right
+    ): Result {
+        verify(expression, border, token)
+        var a = border.borders[token]!!.first
+        var b = border.borders[token]!!.second
         var x = calculateMiddle(a, b)
 
         do {
@@ -35,8 +35,8 @@ class HalfSolver : SingleSolver {
                 b = x
             }
             x = calculateMiddle(a, b)
-        } while ((a - b).abs() > epsilon)
+        } while ((a - b).abs() > border.epsilon)
 
-        return x
+        return Result(mutableMapOf(token to x))
     }
 }

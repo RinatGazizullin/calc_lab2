@@ -79,7 +79,7 @@ class ExpressionProcessor {
     fun calculate(params: Map<String, BigDecimal>): Vector {
         checkTokens()
         val result = Vector.empty(size)
-        IntRange(0, size).forEach { index -> result.results[index] = exps[index].calculate(params) }
+        IntRange(0, size).forEach { index -> result.vector[index] = exps[index].calculate(params) }
         return result
     }
 
@@ -91,7 +91,7 @@ class ExpressionProcessor {
     fun derivative(params: Map<String, BigDecimal>): Vector {
         checkTokens()
         val result = Vector.empty(size)
-        IntRange(0, size).forEach { index -> result.results[index] = exps[index].derivative(params) }
+        IntRange(0, size).forEach { index -> result.vector[index] = exps[index].derivative(params) }
         return result
     }
 
@@ -103,7 +103,7 @@ class ExpressionProcessor {
     fun secondDerivative(param: Map<String, BigDecimal>): Vector {
         checkTokens()
         val result = Vector.empty(size)
-        IntRange(0, size).forEach { index -> result.results[index] = exps[index].secondDerivative(param) }
+        IntRange(0, size).forEach { index -> result.vector[index] = exps[index].secondDerivative(param) }
         return result
     }
 

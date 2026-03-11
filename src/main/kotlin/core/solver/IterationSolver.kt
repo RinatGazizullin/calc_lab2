@@ -2,7 +2,9 @@ package core.solver
 
 import core.basic.SingleSolver
 import core.exception.ExpressionException
+import core.model.Border
 import core.model.Expression
+import core.model.Result
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
@@ -20,12 +22,12 @@ class IterationSolver : SingleSolver {
 
     override fun solve(
         expression: Expression,
-        left: BigDecimal,
-        right: BigDecimal,
-        epsilon: BigDecimal,
+        border: Border,
         token: String
-    ): BigDecimal {
-        verify(expression, left, right, token)
+    ): Result {
+        verify(expression, border, token)
+        val left = border.borders[token]!!.first
+        val right = border.borders[token]!!.second
 
         val step = right.add(left.negate()).divide(
             BigDecimal.valueOf(STEPS),
@@ -67,8 +69,8 @@ class IterationSolver : SingleSolver {
             if (iterations > MAX_ITERATIONS) {
                 throw ExpressionException(ITER_ERROR)
             }
-        } while ((x - new).abs() > epsilon)
+        } while ((x - new).abs() > border.epsilon)
 
-        return new
+        return Result(mutableMapOf(token to new))
     }
 }

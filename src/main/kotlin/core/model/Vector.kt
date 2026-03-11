@@ -2,8 +2,8 @@ package core.model
 
 import java.math.BigDecimal
 
-class Vector(var results: Array<BigDecimal>) {
-    val size = this.results.size
+class Vector(var vector: Array<BigDecimal>) {
+    val size = this.vector.size
 
     companion object {
         fun empty(size: Int): Vector {

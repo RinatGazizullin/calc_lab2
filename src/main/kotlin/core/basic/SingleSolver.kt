@@ -1,7 +1,10 @@
 package core.basic
 
 import core.exception.SolveException
+import core.model.Border
 import core.model.Expression
+import core.model.Result
+import ui.cli.builder.BorderBuilder
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
@@ -13,23 +16,25 @@ interface SingleSolver {
         private const val STEPS: Long = 100
         private const val ENOUGH_ERROR = "Достаточное условие не выполнено"
         private const val NECESSARY_ERROR = "Необходимое условие не выполнено"
+        private const val BORDER_ERROR = "Отсутствуют данные граничных значений"
         private const val LEFT_ERROR = "Левая граница не может быть больше правой"
     }
 
     fun solve(
         expression: Expression,
-        left: BigDecimal,
-        right: BigDecimal,
-        epsilon: BigDecimal,
+        border: Border,
         token: String
-    ): BigDecimal
+    ): Result
 
     fun verify(
         expression: Expression,
-        left: BigDecimal,
-        right: BigDecimal,
+        border: Border,
         token: String
     ) {
+        val data = border.borders[token] ?: throw SolveException(BORDER_ERROR)
+        val left = data.first
+        val right = data.second
+
         if (left >= right) {
             throw SolveException(LEFT_ERROR)
         }
