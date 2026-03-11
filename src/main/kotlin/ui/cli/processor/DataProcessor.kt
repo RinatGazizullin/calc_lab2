@@ -10,6 +10,8 @@ import ui.cli.basic.Command
 import ui.cli.builder.BorderBuilder
 import ui.cli.builder.ExpressionBuilder
 import ui.cli.command.*
+import ui.cli.render.ExpressionRender
+import ui.cli.render.SystemRender
 
 class DataProcessor(
     interfaceProcessor: InterfaceProcessor,
@@ -26,7 +28,7 @@ class DataProcessor(
         commands[Command.Type.HELP] = Help()
         commands[Command.Type.MAN] = Man(commands)
         commands[Command.Type.SET] = Set(expressionProcessor, builderExpression)
-        commands[Command.Type.SHOW] = Show(expressionProcessor)
+        commands[Command.Type.SHOW] = Show(expressionProcessor, SystemRender(ExpressionRender()))
         commands[Command.Type.SIZE] = Size(expressionProcessor)
         commands[Command.Type.SOLVE_SINGLE] = SolveSingle(expressionProcessor,
             builderBorder, listOf(HalfSolver(), IterationSolver(), NewtonSolver()))

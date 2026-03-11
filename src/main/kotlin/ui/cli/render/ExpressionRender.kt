@@ -5,6 +5,6 @@ import ui.cli.basic.CanRender;
 
 class ExpressionRender : CanRender<Expression> {
     override fun render(t: Expression): String {
-        TODO("Not yet implemented")
+        return "(${t.tokens.joinToString(", ")}) = ${t.body}"
     }
 }
