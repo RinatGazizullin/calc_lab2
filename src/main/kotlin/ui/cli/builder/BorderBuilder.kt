@@ -1,6 +1,7 @@
 package ui.cli.builder
 
 import core.exception.BuilderException
+import core.utils.TextUtils
 import ui.cli.basic.CanBuild
 import ui.cli.basic.CanBuild.Companion.MAX_COUNT
 import ui.cli.processor.InterfaceProcessor
@@ -29,7 +30,7 @@ class BorderBuilder(
 
         var epsilon: BigDecimal
         for (i in 1..MAX_COUNT) {
-            val s = interfaceProcessor.readLine(EPSILON)
+            val s = TextUtils.prepare(interfaceProcessor.readLine(EPSILON))
 
             try {
                 epsilon = s.toBigDecimal()
@@ -45,31 +46,52 @@ class BorderBuilder(
     }
 
     private fun buildToken(token: String): Pair<BigDecimal, BigDecimal> {
-        var left: BigDecimal
-        var right: BigDecimal
-
         for (i in 1..MAX_COUNT) {
-            val s1 = interfaceProcessor.readLine(String.format(LEFT, token))
-            val s2 = interfaceProcessor.readLine(String.format(RIGHT, token))
-            try {
-                left = s1.toBigDecimal()
-            } catch (e: NumberFormatException) {
-                interfaceProcessor.renderError(String.format(NUMBER_ERROR, s1))
-                continue
+            var left = BigDecimal.ONE
+            var right = BigDecimal.ONE
+
+            var flag = false
+            for (j in 1..MAX_COUNT) {
+                val s1 = TextUtils.prepare(interfaceProcessor.readLine(String.format(LEFT, token)))
+
+                try {
+                    left = s1.toBigDecimal()
+                    flag = true
+                    break
+                } catch (e: NumberFormatException) {
+                    interfaceProcessor.renderError(String.format(NUMBER_ERROR, s1))
+                    continue
+                }
             }
-            try {
-                right = s2.toBigDecimal()
-            } catch (e: NumberFormatException) {
-                interfaceProcessor.renderError(String.format(NUMBER_ERROR, s2))
-                continue
+
+            if (!flag) {
+                throw BuilderException(BUILDER_ERROR)
             }
+
+            flag = false
+            for (j in 1..MAX_COUNT) {
+                val s2 = TextUtils.prepare(interfaceProcessor.readLine(String.format(RIGHT, token)))
+                try {
+                    right = s2.toBigDecimal()
+                    flag = true
+                    break
+                } catch (e: NumberFormatException) {
+                    interfaceProcessor.renderError(String.format(NUMBER_ERROR, s2))
+                    continue
+                }
+            }
+
+            if (!flag) {
+                throw BuilderException(BUILDER_ERROR)
+            }
+
             if (left >= right) {
                 interfaceProcessor.renderError(MORE_ERROR)
                 continue
             }
+
             return Pair(left, right)
         }
-
         throw BuilderException(BUILDER_ERROR)
     }
 

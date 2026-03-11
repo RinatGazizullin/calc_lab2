@@ -1,7 +1,9 @@
 package ui.cli.command
 
 import core.basic.SingleSolver
+import core.exception.BuilderException
 import core.exception.ExpressionException
+import core.exception.SolveException
 import core.processor.ExpressionProcessor
 import core.utils.TextUtils
 import ui.cli.basic.CanBuild
@@ -61,32 +63,40 @@ class SolveSingle(
             return Result(TOKENS_ERROR, Result.Code.ERROR)
         }
 
-        val border = builder.build(tokens)
+        val border: BorderBuilder.Border
+        try {
+            border = builder.build(tokens)
+        } catch (e: BuilderException) {
+            return Result(e.message!!, Result.Code.ERROR)
+        }
         val result = StringBuilder()
         val token = tokens.first()
         var first = true
         var counter = 1
 
-        for (solver in solvers) {
-            if (first) first = false else result.appendLine()
-            result.append("${counter++}) ${solver.name}").appendLine()
-            try {
-                result.append(
-                    "$token = ${
-                        solver.solve(
-                            expression,
-                            border.borders[token]!!.first,
-                            border.borders[token]!!.second,
-                            border.epsilon,
-                            token
-                        )
-                    }"
-                )
-            } catch (e: ExpressionException) {
-                result.append(e.message)
+        try {
+            for (solver in solvers) {
+                if (first) first = false else result.appendLine()
+                result.append("${counter++}) ${solver.name}").appendLine()
+                try {
+                    result.append(
+                        "$token = ${
+                            solver.solve(
+                                expression,
+                                border.borders[token]!!.first,
+                                border.borders[token]!!.second,
+                                border.epsilon,
+                                token
+                            )
+                        }"
+                    )
+                } catch (e: ExpressionException) {
+                    result.append(e.message)
+                }
             }
+        } catch (e: SolveException) {
+            return Result(e.message!!, Result.Code.ERROR)
         }
-
         return Result(result.toString(), Result.Code.GOOD)
     }
 }
