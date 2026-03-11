@@ -13,6 +13,7 @@ class InstrumentModule {
     private val input1 = InputModule()
     private val input2 = InputModule()
     private val output = ResultModule()
+    private val solve = SolveAllModule()
 
     @Composable
     fun content() {
@@ -39,16 +40,16 @@ class InstrumentModule {
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()
-                    .background(Color.Blue)
-            )
+            ) {
+                output.content()
+            }
 
             Box(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()
-                    .background(Color.Cyan)
             ) {
-                output.content()
+                solve.content()
             }
         }
     }
