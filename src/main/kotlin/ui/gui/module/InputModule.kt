@@ -16,9 +16,9 @@ class InputModule(
     graphicProcessor: GraphicProcessor,
     index: Int
 ) {
-    private val solve = Solve()
+    private val solve = Solve(index, graphicProcessor)
     private val show = Show()
-    private val delete = Example(index, expressionProcessor)
+    private val delete = Example(index, graphicProcessor)
     private val data = Input(expressionProcessor, graphicProcessor, index)
 
     @Composable

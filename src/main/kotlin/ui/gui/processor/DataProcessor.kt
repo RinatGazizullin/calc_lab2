@@ -23,10 +23,11 @@ class DataProcessor {
     val expressionProcessor = ExpressionProcessor()
 
     init {
+        commands[Command.Type.EXAMPLE] = Example(expressionProcessor)
+
         /*
         val borderBuilder = BorderGuiBuilder()
 
-        commands[Command.Type.BUILD] = Build(expressionProcessor)
         commands[Command.Type.EXIT] = Exit()
         commands[Command.Type.HELP] = Help()
         commands[Command.Type.MAN] = Man(commands)
