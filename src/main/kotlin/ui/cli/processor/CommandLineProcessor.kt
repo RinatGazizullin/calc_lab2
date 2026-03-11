@@ -1,8 +1,9 @@
 package ui.cli.processor
 
 import ui.basic.Command
+import ui.basic.Processor
 
-class CommandLineProcessor(private val interfaceProcessor: InterfaceProcessor) {
+class CommandLineProcessor(private val interfaceProcessor: InterfaceProcessor): Processor {
     companion object {
         private const val START = "Для вывода команд введите help!"
         private const val NO_COMMAND_ERROR = "Команда <%s> не была найдена"
@@ -11,7 +12,7 @@ class CommandLineProcessor(private val interfaceProcessor: InterfaceProcessor) {
 
     private val dataProcessor = DataProcessor(interfaceProcessor)
 
-    fun start() {
+    override fun start() {
         interfaceProcessor.renderMessage(START)
         while (true) {
             val line = interfaceProcessor.readLine().trim()
