@@ -6,6 +6,7 @@ import core.processor.ExpressionProcessor
 import core.solver.HalfSolver
 import core.solver.IterationSolver
 import core.solver.NewtonSolver
+import core.solver.SimpleSystemSolver
 import ui.cli.basic.CanBuild
 import ui.cli.basic.Command
 import ui.cli.builder.BorderBuilder
@@ -31,9 +32,8 @@ class DataProcessor(
         commands[Command.Type.MAN] = Man(commands)
         commands[Command.Type.SET] = Set(expressionProcessor, builderExpression)
         commands[Command.Type.SHOW] = Show(expressionProcessor, SystemRender(ExpressionRender()))
-        commands[Command.Type.SIZE] = Size(expressionProcessor)
-        commands[Command.Type.SOLVE_SINGLE] = SolveSingle(expressionProcessor, ResultRender(),
-            builderBorder, listOf(HalfSolver(), IterationSolver(), NewtonSolver()))
-        commands[Command.Type.SOLVE_SYSTEM] = SolveSystem(expressionProcessor)
+        commands[Command.Type.SOLVE] = Solve(expressionProcessor, ResultRender(),
+            builderBorder, listOf(HalfSolver(), IterationSolver(), NewtonSolver()),
+            listOf(SimpleSystemSolver()))
     }
 }

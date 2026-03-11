@@ -26,8 +26,7 @@ abstract class Command(val type: Type) : HaveManual {
         SET("set", "Ввести НУ (нелинейное уравнение)"),
         SHOW("show", "Показать СНУ (систему нелинейных уравнений)"),
         SIZE("size", "Задать количество НУ (нелинейных уравнений) в системе"),
-        SOLVE_SINGLE("single", "Решить НУ (нелинейное уравнение)"),
-        SOLVE_SYSTEM("system", "Решить СНУ (систему нелинейных уравнений)");
+        SOLVE("solve", "Решить СНУ (систему нелинейных уравнений), НУ (нелинейное уравнение)");
 
         companion object {
             private const val NO_ENUM_ERROR = "Неверное имя"

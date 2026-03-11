@@ -8,7 +8,9 @@ import java.math.BigDecimal
 
 class ExpressionProcessor {
     val tokens: MutableSet<String> = mutableSetOf()
-    val exps: MutableList<Expression> = mutableListOf(Examples.quickExample())
+    val exps: MutableList<Expression> = mutableListOf(
+        Examples.quickExample(),
+        Examples.quickExample())
     var size: Int = exps.size
 
     init {
@@ -16,17 +18,9 @@ class ExpressionProcessor {
     }
 
     companion object {
-        private const val MAX_SIZE = 20
         private const val SIZE_ERROR = "Размер выходит за границы размерности"
         private const val INDEX_ERROR = "Индекс выходит за границы размерности"
         private const val TOKEN_ERROR = "Количество переменных не соответствует размерности"
-    }
-
-    fun addExpression(newExpression: Expression) {
-        tokens.addAll(newExpression.tokens)
-        exps.add(newExpression)
-
-        checkSize()
     }
 
     fun checkIndex(index: Int) {
@@ -38,10 +32,11 @@ class ExpressionProcessor {
     fun changeExpression(newExpression: Expression, index: Int) {
         checkIndex(index)
         exps[index] = newExpression
-        checkSize()
+        // checkSize()
         reCalcTokens()
     }
 
+    /*
     fun changeSize(newSize: Int) {
         if (newSize > MAX_SIZE || newSize <= 0) {
             throw ExpressionException(SIZE_ERROR)
@@ -60,10 +55,13 @@ class ExpressionProcessor {
         checkSize()
         reCalcTokens()
     }
+     */
 
+    /*
     private fun checkSize() {
         size = exps.size
     }
+     */
 
     private fun reCalcTokens() {
         tokens.clear()

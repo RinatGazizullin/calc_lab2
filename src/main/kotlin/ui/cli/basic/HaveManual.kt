@@ -17,6 +17,10 @@ interface HaveManual {
                 return "Команда требует аргументы - $argument - $description"
             }
 
+            fun some(argument: String, description: String): String {
+                return "Команда может принимать аргументы - $argument - $description"
+            }
+
             fun noArguments(): String {
                 return "Команда не принимает никакие аргументы"
             }
