@@ -1,6 +1,7 @@
 package ui.cli.command
 
 import core.basic.SingleSolver
+import core.basic.SystemSolver
 import core.exception.BuilderException
 import core.exception.ExpressionException
 import core.exception.SolveException
@@ -12,36 +13,38 @@ import ui.cli.basic.CanRender
 import ui.cli.basic.Command
 import ui.cli.basic.HaveManual
 
-class SolveSingle(
+class Solve(
     private val expressionProcessor: ExpressionProcessor,
     private val render: CanRender<core.model.Result>,
     private val builder: CanBuild<Border>,
-    private val solvers: List<SingleSolver>
-) : Command(Type.SOLVE_SINGLE) {
+    private val singles: List<SingleSolver>,
+    private val systems: List<SystemSolver>
+) : Command(Type.SOLVE) {
     override val manual: String
 
     init {
         val builder = StringBuilder()
         builder.append(HaveManual.ManualBuilder.name(type.value))
         builder.append(HaveManual.ManualBuilder.description(type.description))
-        builder.append(HaveManual.ManualBuilder.arguments(ARGUMENT_NAME, ARGUMENT_DESCRIPTION))
+        builder.append(HaveManual.ManualBuilder.some(ARGUMENT_NAME, ARGUMENT_DESCRIPTION))
         manual = builder.toString()
     }
 
     companion object {
         private const val ARGS_COUNT = 1
         private const val TOKENS_COUNT = 1
+        private const val TOKENS_MULTI = 2
         private const val ARGUMENT_NAME = "<index>"
         private const val TOKENS_ERROR = "Неверное количество переменных"
         private const val ARGS_ERROR = "Значение <%s> должно быть числом"
         private const val ARGUMENT_DESCRIPTION = "Индекс НУ (нелинейного уравнения)"
-        private const val NO_ARGS_ERROR = "Необходимо ввести один аргумент <index>"
+        private const val NO_ARGS_ERROR = "Необходимо ввести один аргумент $ARGUMENT_NAME"
     }
 
     override fun execute(arguments: Arguments): Result {
-        val index: Int
+        if (arguments.args.size >= ARGS_COUNT) {
+            val index: Int
 
-        if (arguments.args.size == ARGS_COUNT) {
             try {
                 index = TextUtils.prepare(arguments.args[0]).toInt() - 1
             } catch (e: NumberFormatException) {
@@ -49,10 +52,55 @@ class SolveSingle(
                     String.format(ARGS_ERROR, arguments.args[0]), Result.Code.ERROR
                 )
             }
+
+            return executeSingle(index)
         } else {
-            return Result(NO_ARGS_ERROR, Result.Code.ERROR)
+            return executeMulti()
+        }
+    }
+
+    private fun executeMulti(): Result {
+        val tokens = expressionProcessor.tokens
+
+        if (tokens.size != TOKENS_MULTI) {
+            return Result(TOKENS_ERROR, Result.Code.ERROR)
         }
 
+        val multi: Border
+        try {
+            multi = builder.build(tokens)
+        } catch (e: BuilderException) {
+            return Result(e.message!!, Result.Code.ERROR)
+        }
+
+        var counter = 1
+        var first = true
+        val result = StringBuilder()
+
+        try {
+            for (solver in systems) {
+                if (first) first = false else result.appendLine()
+                result.append("${counter++}) ${solver.name}").appendLine()
+                try {
+                    result.append(
+                        solver.solve(
+                            expressionProcessor,
+                            multi,
+                            tokens
+                        )
+                    )
+                } catch (e: ExpressionException) {
+                    result.append(e.message)
+                }
+            }
+        }  catch (e: SolveException) {
+            return Result(e.message!!, Result.Code.ERROR)
+        }
+
+        return Result(result.toString(), Result.Code.GOOD)
+    }
+
+    private fun executeSingle(index: Int): Result {
         try {
             expressionProcessor.checkIndex(index)
         } catch (e: ExpressionException) {
@@ -71,13 +119,14 @@ class SolveSingle(
         } catch (e: BuilderException) {
             return Result(e.message!!, Result.Code.ERROR)
         }
-        val result = StringBuilder()
-        val token = tokens.first()
-        var first = true
+
         var counter = 1
+        var first = true
+        val token = tokens.first()
+        val result = StringBuilder()
 
         try {
-            for (solver in solvers) {
+            for (solver in singles) {
                 if (first) first = false else result.appendLine()
                 result.append("${counter++}) ${solver.name}").appendLine()
                 try {
