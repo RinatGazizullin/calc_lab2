@@ -3,13 +3,14 @@ package core.solver
 import core.basic.SingleSolver
 import core.model.Expression
 import java.math.BigDecimal
+import java.math.MathContext
 
 class HalfSolver : SingleSolver {
     override val name: String = "Метод половинного деления"
 
     companion object {
         private fun calculateMiddle(a: BigDecimal, b: BigDecimal): BigDecimal {
-            return (a + b) / BigDecimal.valueOf(2)
+            return (a + b).divide(BigDecimal.valueOf(2), MathContext.DECIMAL128)
         }
     }
 
@@ -32,7 +33,7 @@ class HalfSolver : SingleSolver {
                 b = x
             }
             x = calculateMiddle(a, b)
-        } while ((expression.calculate(a, token) - expression.calculate(b, token)).abs() > epsilon)
+        } while ((a - b).abs() > epsilon)
 
         return x
     }
