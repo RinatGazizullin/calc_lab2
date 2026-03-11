@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
@@ -29,6 +30,7 @@ class ApplicationProcessor {
             Window(
                 resizable = false,
                 title = "Калькулятор уравнений",
+                icon = painterResource("icon.png"),
                 onCloseRequest = ::exitApplication,
                 state = rememberWindowState(
                     width = (screenSize.width * .8).toInt().dp,
