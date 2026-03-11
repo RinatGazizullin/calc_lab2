@@ -20,7 +20,7 @@ import ui.render.SystemRender
 
 class DataProcessor {
     val commands: MutableMap<Command.Type, Command> = mutableMapOf()
-    private val expressionProcessor = ExpressionProcessor()
+    val expressionProcessor = ExpressionProcessor()
 
     init {
         /*

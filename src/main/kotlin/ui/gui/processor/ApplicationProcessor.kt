@@ -13,11 +13,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import core.processor.ExpressionProcessor
 import ui.gui.module.InstrumentModule
 import java.awt.Toolkit
 
-class ApplicationProcessor {
-    private val instrumentModule = InstrumentModule()
+class ApplicationProcessor(
+    expressionProcessor: ExpressionProcessor,
+    graphicProcessor: GraphicProcessor
+) {
+    private val instrumentModule = InstrumentModule(expressionProcessor, graphicProcessor)
 
     companion object {
         val PADDING_ROUND = 10.dp
@@ -45,7 +49,7 @@ class ApplicationProcessor {
     }
 
     @Composable
-    fun mainLayout() {
+    private fun mainLayout() {
         Row(
             modifier = Modifier.fillMaxSize()
         ) {

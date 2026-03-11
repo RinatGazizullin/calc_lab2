@@ -7,14 +7,18 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.foundation.background
+import core.processor.ExpressionProcessor
 import ui.gui.processor.ApplicationProcessor
+import ui.gui.processor.GraphicProcessor
 
-class Input {
+class Input(
+    private val expressionProcessor: ExpressionProcessor,
+    private val graphicProcessor: GraphicProcessor,
+    private val index: Int
+) {
     @Composable
     fun content(
-        value: String = "",
+        value: String = expressionProcessor.exps[index].body,
         onValueChange: (String) -> Unit = {},
         modifier: Modifier = Modifier
     ) {

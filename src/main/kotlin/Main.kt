@@ -1,12 +1,11 @@
 import ui.cli.processor.CommandLineProcessor
 import ui.cli.processor.InterfaceProcessor
-import ui.gui.processor.ApplicationProcessor
+import ui.gui.processor.GraphicProcessor
 
 fun main(args: Array<String>) {
     if (args.isEmpty() || args[0] == "cli") {
-        val interfaceProcessor = InterfaceProcessor()
-        CommandLineProcessor(interfaceProcessor).start()
+        CommandLineProcessor(InterfaceProcessor()).start()
     } else {
-        ApplicationProcessor().showWindow()
+        GraphicProcessor().start()
     }
 }
