@@ -4,16 +4,18 @@ import core.basic.SingleSolver
 import core.exception.BuilderException
 import core.exception.ExpressionException
 import core.exception.SolveException
+import core.model.Border
 import core.processor.ExpressionProcessor
 import core.utils.TextUtils
 import ui.cli.basic.CanBuild
+import ui.cli.basic.CanRender
 import ui.cli.basic.Command
 import ui.cli.basic.HaveManual
-import ui.cli.builder.BorderBuilder
 
 class SolveSingle(
     private val expressionProcessor: ExpressionProcessor,
-    private val builder: CanBuild<BorderBuilder.Border>,
+    private val render: CanRender<core.model.Result>,
+    private val builder: CanBuild<Border>,
     private val solvers: List<SingleSolver>
 ) : Command(Type.SOLVE_SINGLE) {
     override val manual: String
@@ -63,7 +65,7 @@ class SolveSingle(
             return Result(TOKENS_ERROR, Result.Code.ERROR)
         }
 
-        val border: BorderBuilder.Border
+        val border: Border
         try {
             border = builder.build(tokens)
         } catch (e: BuilderException) {
@@ -80,15 +82,13 @@ class SolveSingle(
                 result.append("${counter++}) ${solver.name}").appendLine()
                 try {
                     result.append(
-                        "$token = ${
+                        render.render(
                             solver.solve(
                                 expression,
-                                border.borders[token]!!.first,
-                                border.borders[token]!!.second,
-                                border.epsilon,
+                                border,
                                 token
                             )
-                        }"
+                        )
                     )
                 } catch (e: ExpressionException) {
                     result.append(e.message)

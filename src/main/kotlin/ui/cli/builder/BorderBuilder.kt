@@ -1,6 +1,7 @@
 package ui.cli.builder
 
 import core.exception.BuilderException
+import core.model.Border
 import core.utils.TextUtils
 import ui.cli.basic.CanBuild
 import ui.cli.basic.CanBuild.Companion.MAX_COUNT
@@ -9,7 +10,7 @@ import java.math.BigDecimal
 
 class BorderBuilder(
     private val interfaceProcessor: InterfaceProcessor
-) : CanBuild<BorderBuilder.Border> {
+) : CanBuild<Border> {
     companion object {
         private const val EPSILON = "Введите погрешность - "
         private const val LEFT = "Введите левую границу для <%s> - "
@@ -94,9 +95,4 @@ class BorderBuilder(
         }
         throw BuilderException(BUILDER_ERROR)
     }
-
-    class Border(
-        val borders: Map<String, Pair<BigDecimal, BigDecimal>>,
-        val epsilon: BigDecimal
-    )
 }
