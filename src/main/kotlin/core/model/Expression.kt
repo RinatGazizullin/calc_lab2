@@ -34,17 +34,19 @@ class Expression(
 
     fun derivative(params: Map<String, BigDecimal>): BigDecimal {
         checkTokens(params)
-        val left = (expression.apply(params) - expression.apply(params))
+        val left = (expression.apply(params
+            .mapValues { (_, value) -> value - EPSILON }) - expression.apply(params))
             .divide(EPSILON, MathContext.DECIMAL128)
-        val right = (expression.apply(params) - expression.apply(params))
+        val right = (expression.apply(params) - expression
+            .apply(params.mapValues { (_, value) -> value + EPSILON }))
             .divide(EPSILON, MathContext.DECIMAL128)
 
         if ((left - right).abs() > CHECK_DERIVATIVE) {
             throw ExpressionException(DERIVATIVE_ERROR)
         }
 
-        return (expression.apply(params.mapValues { (_, value) -> value + EPSILON })) -
-                expression.apply(params.mapValues { (_, value) -> value - EPSILON })
+        return (expression.apply(params.mapValues { (_, value) -> value + EPSILON }) -
+                expression.apply(params.mapValues { (_, value) -> value - EPSILON }))
         .divide(EPSILON * BigDecimal.valueOf(2), MathContext.DECIMAL128)
     }
 
