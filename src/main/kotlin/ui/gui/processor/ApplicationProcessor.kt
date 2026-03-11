@@ -20,7 +20,7 @@ class ApplicationProcessor {
     private val instrumentModule = InstrumentModule()
 
     companion object {
-        val PADDING_ROUND = 20.dp
+        val PADDING_ROUND = 10.dp
     }
 
     fun showWindow() {

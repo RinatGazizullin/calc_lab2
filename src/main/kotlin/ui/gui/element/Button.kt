@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ui.gui.processor.ApplicationProcessor.Companion.PADDING_ROUND
 
@@ -45,15 +44,12 @@ class Button(
                     backgroundColor = color,
                     contentColor = Color.White
                 ),
-                elevation = ButtonDefaults.elevation(
-                    defaultElevation = 4.dp,
-                    pressedElevation = 8.dp
-                ),
+                elevation = null,
                 shape = RoundedCornerShape(PADDING_ROUND)
             ) {
                 Text(
                     text = text,
-                    fontSize = 10.sp
+                    fontSize = 14.sp
                 )
             }
         }

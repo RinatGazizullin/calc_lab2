@@ -10,7 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 class InstrumentModule {
-    private val inputModule = InputModule()
+    private val input1 = InputModule()
+    private val input2 = InputModule()
+    private val output = ResultModule()
 
     @Composable
     fun content() {
@@ -22,15 +24,16 @@ class InstrumentModule {
                     .weight(2f)
                     .fillMaxWidth()
             ) {
-                inputModule.content()
+                input1.content()
             }
 
             Box(
                 modifier = Modifier
                     .weight(2f)
                     .fillMaxWidth()
-                    .background(Color.Green)
-            )
+            ) {
+                input2.content()
+            }
 
             Box(
                 modifier = Modifier
@@ -38,6 +41,15 @@ class InstrumentModule {
                     .fillMaxWidth()
                     .background(Color.Blue)
             )
+
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .background(Color.Cyan)
+            ) {
+                output.content()
+            }
         }
     }
 }

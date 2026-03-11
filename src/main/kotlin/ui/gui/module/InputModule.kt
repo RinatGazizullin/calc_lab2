@@ -1,16 +1,17 @@
 package ui.gui.module
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import ui.gui.element.Input
 import ui.gui.processor.ApplicationProcessor.Companion.PADDING_ROUND
 
 class InputModule {
-    private val solve = Button(Color.Green, "Решить")
-    private val show = Button(Color.Yellow, "Показать")
-    private val delete = Button(Color.Red, "Пример")
+    private val solve = Button(Color(0xFF43A047), "Решить")
+    private val show = Button(Color(0xFFF9A825), "Показать")
+    private val delete = Button(Color(0xFFE53935), "Пример")
+    private val data = Input()
 
     @Composable
     fun content() {
@@ -24,8 +25,10 @@ class InputModule {
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()
-                    .background(Color.DarkGray)
-            )
+                    // .background(Color.DarkGray)
+            ) {
+                data.content()
+            }
 
             Row(
                 modifier = Modifier
@@ -37,7 +40,6 @@ class InputModule {
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxHeight()
-                        .background(Color.DarkGray)
                 ) {
                     solve.content()
                 }
@@ -46,7 +48,6 @@ class InputModule {
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxHeight()
-                        .background(Color.DarkGray)
                 ) {
                     show.content()
                 }
@@ -55,7 +56,6 @@ class InputModule {
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxHeight()
-                        .background(Color.DarkGray)
                 ) {
                     delete.content()
                 }
