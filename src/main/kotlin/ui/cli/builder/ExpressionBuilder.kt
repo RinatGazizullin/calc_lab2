@@ -1,4 +1,4 @@
-package ui.builder
+package ui.cli.builder
 
 import core.exception.BuilderException
 import core.exception.ExpressionException

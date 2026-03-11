@@ -1,7 +1,6 @@
 package ui.cli.processor
 
 import ui.basic.Command
-import ui.cli.utils.DataProcessor
 
 class CommandLineProcessor(private val interfaceProcessor: InterfaceProcessor) {
     companion object {

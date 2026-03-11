@@ -1,4 +1,4 @@
-package ui.cli.utils
+package ui.cli.processor
 
 import core.model.Border
 import core.model.Expression
@@ -9,9 +9,8 @@ import core.solver.NewtonSolver
 import core.solver.SimpleSystemSolver
 import ui.basic.CanBuild
 import ui.basic.Command
-import ui.builder.BorderBuilder
-import ui.builder.ExpressionBuilder
-import ui.cli.processor.InterfaceProcessor
+import ui.cli.builder.BorderBuilder
+import ui.cli.builder.ExpressionBuilder
 import ui.render.ExpressionRender
 import ui.render.ResultRender
 import ui.render.SystemRender
