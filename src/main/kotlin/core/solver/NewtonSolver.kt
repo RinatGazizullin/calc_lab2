@@ -3,13 +3,15 @@ package core.solver
 import core.basic.SingleSolver
 import core.model.Expression
 import java.math.BigDecimal
+import java.math.MathContext
 
 class NewtonSolver : SingleSolver {
     override val name: String = "Метод касательных"
 
     companion object {
         private fun calculateNew(expression: Expression, value: BigDecimal, token: String): BigDecimal {
-            return value - expression.calculate(value, token) / expression.derivative(value, token)
+            return value - expression.calculate(value, token).divide(expression
+                .derivative(value, token), MathContext.DECIMAL128)
         }
     }
 
@@ -22,14 +24,16 @@ class NewtonSolver : SingleSolver {
     ): BigDecimal {
         verify(expression, left, right, token)
         var x =
-            if (expression.calculate(left, token) * expression.secondDerivative(left, token) > BigDecimal.ZERO)
+            if (expression.calculate(left, token).signum()
+                * expression.secondDerivative(left, token).signum() > 0)
                 left
             else
                 right
 
         do {
             x = calculateNew(expression, x, token)
-        } while ((expression.calculate(x, token) / expression.derivative(x, token)).abs() > epsilon)
+        } while ((expression.calculate(x, token).divide(expression.derivative(x, token),
+                MathContext.DECIMAL128)).abs() > epsilon)
 
         return x
     }
