@@ -37,7 +37,7 @@ class Size(private val expressionProcessor: ExpressionProcessor) : Command(Type.
                 return Result(SIZE_ERROR, Result.Code.ERROR)
             }
 
-            expressionProcessor.size = newSize
+            expressionProcessor.changeSize(newSize)
             return Result(GOOD_MESSAGE, Result.Code.GOOD)
         } catch (e: NumberFormatException) {
             return Result(FORMAT_MESSAGE, Result.Code.ERROR)

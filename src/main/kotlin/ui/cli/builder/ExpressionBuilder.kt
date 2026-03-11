@@ -12,7 +12,7 @@ class ExpressionBuilder(
     private val interfaceProcessor: InterfaceProcessor,
 ) : CanBuild<Expression> {
     companion object {
-        private const val EXAMPLE = "f(%s) = "
+        private const val EXAMPLE = "(...) = "
         private const val INTRO_MESSAGE = "Введите функцию!"
         private const val BUILDER_ERROR = "Не удалось получить новую функцию"
     }
