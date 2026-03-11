@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import ui.gui.module.InputModule
 import ui.gui.module.InstrumentModule
 import java.awt.Toolkit
 
@@ -20,7 +19,7 @@ class ApplicationProcessor {
     private val instrumentModule = InstrumentModule()
 
     companion object {
-        private val PADDING = 20.dp
+        val PADDING_ROUND = 20.dp
     }
 
     fun showWindow() {
@@ -52,7 +51,7 @@ class ApplicationProcessor {
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight()
-                    .padding(PADDING),
+                    .padding(PADDING_ROUND),
                 contentAlignment = Alignment.Center
             ) {
                 instrumentModule.content()
@@ -70,7 +69,7 @@ class ApplicationProcessor {
                     .weight(2f)
                     .fillMaxHeight()
                     .background(Color.White)
-                    .padding(PADDING),
+                    .padding(PADDING_ROUND),
                 contentAlignment = Alignment.Center
             ) {
                 Text(

@@ -1,6 +1,7 @@
 package ui.gui.module
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
@@ -12,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ui.gui.processor.ApplicationProcessor.Companion.PADDING_ROUND
 
 class Button(
     private val color: Color,
@@ -46,7 +48,8 @@ class Button(
                 elevation = ButtonDefaults.elevation(
                     defaultElevation = 4.dp,
                     pressedElevation = 8.dp
-                )
+                ),
+                shape = RoundedCornerShape(PADDING_ROUND)
             ) {
                 Text(
                     text = text,

@@ -21,7 +21,6 @@ class InstrumentModule {
                 modifier = Modifier
                     .weight(2f)
                     .fillMaxWidth()
-                    .background(Color.Red)
             ) {
                 inputModule.content()
             }
