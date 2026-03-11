@@ -14,10 +14,12 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.sp
 import ui.gui.processor.ApplicationProcessor.Companion.PADDING_ROUND
 
-class Button(
+abstract class Button(
     private val color: Color,
     private val text: String,
 ) {
+    abstract fun execute()
+
     @Composable
     fun content() {
         var isHovered by remember { mutableStateOf(false) }
@@ -28,7 +30,7 @@ class Button(
             contentAlignment = Alignment.Center
         ) {
             Button(
-                onClick = { println("Кнопка нажата!") },
+                onClick = { execute() },
                 modifier = Modifier
                     .fillMaxSize()
                     .scale(if (isHovered) 1.05f else 1f)

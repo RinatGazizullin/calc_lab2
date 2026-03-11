@@ -19,7 +19,7 @@ class Man(private val commands: Map<Type, Command>) : Command(Type.MAN) {
         private const val ARGUMENT_NAME = "<command_name>"
         private const val TYPE_ERROR = "Команда <%s> не была обнаружена"
         private const val MODE_ERROR = "Команда <%s> недоступна в этом режиме"
-        private const val NO_ARGS_ERROR = "Необходимо ввести один аргумент <command>"
+        private const val NO_ARGS_ERROR = "Необходимо ввести один аргумент $ARGUMENT_NAME"
         private const val ARGUMENT_DESCRIPTION = "Имя команды, для которого нужно описание"
     }
 

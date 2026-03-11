@@ -5,11 +5,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import ui.gui.element.Output
+import ui.gui.element.ShowAll
+import ui.gui.element.SolveAll
 import ui.gui.processor.ApplicationProcessor.Companion.PADDING_ROUND
 
 class ResultModule {
-    private val solve = Button(Color(0xFF43A047), "Решить все")
-    private val show = Button(Color(0xFFF9A825), "Показать обоих")
+    private val solve = SolveAll()
+    private val show = ShowAll()
     private val data = Output()
 
     @Composable

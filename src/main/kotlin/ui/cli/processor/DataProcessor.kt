@@ -27,7 +27,7 @@ class DataProcessor(
         val builderExpression: CanBuild<Expression> = ExpressionBuilder(interfaceProcessor)
         val builderBorder: CanBuild<Border> = BorderBuilder(interfaceProcessor)
 
-        commands[Command.Type.BUILD] = Build(expressionProcessor)
+        commands[Command.Type.EXAMPLE] = Example(expressionProcessor)
         commands[Command.Type.EXIT] = Exit()
         commands[Command.Type.HELP] = Help()
         commands[Command.Type.MAN] = Man(commands)

@@ -1,5 +1,6 @@
 package core.processor
 
+import core.basic.Subscriber
 import core.exception.ExpressionException
 import core.model.Expression
 import core.model.Vector
@@ -7,6 +8,7 @@ import core.utils.Examples
 import java.math.BigDecimal
 
 class ExpressionProcessor {
+    private val subscribers: MutableSet<Subscriber> = mutableSetOf()
     val tokens: MutableSet<String> = mutableSetOf()
     val exps: MutableList<Expression> = mutableListOf(
         Examples.quickExample(),
@@ -34,6 +36,11 @@ class ExpressionProcessor {
         exps[index] = newExpression
         // checkSize()
         reCalcTokens()
+        subscribers.forEach { subscriber -> subscriber.changed() }
+    }
+
+    fun subscribe(subscriber: Subscriber) {
+        subscribers.add(subscriber)
     }
 
     /*

@@ -19,7 +19,7 @@ abstract class Command(val type: Type) : HaveManual {
         val value: String,
         override val description: String
     ) : HaveDescription {
-        BUILD("build", "Ввести новую СНУ (систему нелинейных уравнений)"),
+        EXAMPLE("example", "Сменить НУ (нелинейное уравнение)"),
         EXIT("exit", "Завершить работу приложения"),
         HELP("help", "Вывести справку по командам"),
         MAN("man", "Вывести мануал команды <command>"),

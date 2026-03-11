@@ -3,9 +3,11 @@ package ui.gui.module
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import core.processor.ExpressionProcessor
+import ui.gui.element.Example
 import ui.gui.element.Input
+import ui.gui.element.Show
+import ui.gui.element.Solve
 import ui.gui.processor.ApplicationProcessor.Companion.PADDING_ROUND
 import ui.gui.processor.GraphicProcessor
 
@@ -14,9 +16,9 @@ class InputModule(
     graphicProcessor: GraphicProcessor,
     index: Int
 ) {
-    private val solve = Button(Color(0xFF43A047), "Решить")
-    private val show = Button(Color(0xFFF9A825), "Показать")
-    private val delete = Button(Color(0xFFE53935), "Пример")
+    private val solve = Solve()
+    private val show = Show()
+    private val delete = Example(index, expressionProcessor)
     private val data = Input(expressionProcessor, graphicProcessor, index)
 
     @Composable
