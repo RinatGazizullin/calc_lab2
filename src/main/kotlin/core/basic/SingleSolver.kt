@@ -4,7 +4,6 @@ import core.exception.SolveException
 import core.model.Border
 import core.model.Expression
 import core.model.Result
-import ui.cli.builder.BorderBuilder
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode

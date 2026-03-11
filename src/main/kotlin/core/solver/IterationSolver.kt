@@ -16,8 +16,8 @@ class IterationSolver : SingleSolver {
         private const val STEPS: Long = 100
         private const val MAX_ITERATIONS = 1E5
         private val CHECK_DERIVATIVE = BigDecimal("1E-3")
-        private const val ENOUGH_ERROR = "Достаточное условие не выполнено"
         private const val ITER_ERROR = "Достигнуто максимальное количество итераций"
+        private const val ENOUGH_ERROR = "Достаточное условие метода простой итерации не выполнено"
     }
 
     override fun solve(
