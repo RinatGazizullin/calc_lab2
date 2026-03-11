@@ -1,7 +1,7 @@
 package ui.cli.processor
 
-import core.parser.ExpressionParser
-import ui.cli.basic.Command
+import ui.basic.Command
+import ui.cli.utils.DataProcessor
 
 class CommandLineProcessor(private val interfaceProcessor: InterfaceProcessor) {
     companion object {

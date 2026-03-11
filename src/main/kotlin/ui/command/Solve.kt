@@ -1,4 +1,4 @@
-package ui.cli.command
+package ui.command
 
 import core.basic.SingleSolver
 import core.basic.SystemSolver
@@ -6,12 +6,13 @@ import core.exception.BuilderException
 import core.exception.ExpressionException
 import core.exception.SolveException
 import core.model.Border
+import core.model.Result
 import core.processor.ExpressionProcessor
 import core.utils.TextUtils
-import ui.cli.basic.CanBuild
-import ui.cli.basic.CanRender
-import ui.cli.basic.Command
-import ui.cli.basic.HaveManual
+import ui.basic.CanBuild
+import ui.basic.CanRender
+import ui.basic.Command
+import ui.basic.HaveManual
 
 class Solve(
     private val expressionProcessor: ExpressionProcessor,

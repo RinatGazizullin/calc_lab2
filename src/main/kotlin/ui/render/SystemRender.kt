@@ -1,8 +1,8 @@
-package ui.cli.render
+package ui.render
 
 import core.model.Expression
 import core.processor.ExpressionProcessor
-import ui.cli.basic.CanRender
+import ui.basic.CanRender
 
 class SystemRender(
     private val expressionRender: CanRender<Expression>

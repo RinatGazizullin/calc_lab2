@@ -1,7 +1,7 @@
-package ui.cli.render
+package ui.render
 
 import core.model.Expression
-import ui.cli.basic.CanRender;
+import ui.basic.CanRender;
 
 class ExpressionRender : CanRender<Expression> {
     override fun render(t: Expression): String {

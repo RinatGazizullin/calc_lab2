@@ -1,10 +1,10 @@
-package ui.cli.builder
+package ui.builder
 
 import core.exception.BuilderException
 import core.model.Border
 import core.utils.TextUtils
-import ui.cli.basic.CanBuild
-import ui.cli.basic.CanBuild.Companion.MAX_COUNT
+import ui.basic.CanBuild
+import ui.basic.CanBuild.Companion.MAX_COUNT
 import ui.cli.processor.InterfaceProcessor
 import java.math.BigDecimal
 

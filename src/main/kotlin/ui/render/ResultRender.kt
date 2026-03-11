@@ -1,7 +1,7 @@
-package ui.cli.render
+package ui.render
 
 import core.model.Result
-import ui.cli.basic.CanRender
+import ui.basic.CanRender
 
 class ResultRender: CanRender<Result> {
     override fun render(t: Result): String {

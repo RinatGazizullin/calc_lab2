@@ -1,11 +1,11 @@
-package ui.cli.builder
+package ui.builder
 
 import core.exception.BuilderException
 import core.exception.ExpressionException
 import core.model.Expression
 import core.parser.ExpressionParser
-import ui.cli.basic.CanBuild
-import ui.cli.basic.CanBuild.Companion.MAX_COUNT
+import ui.basic.CanBuild
+import ui.basic.CanBuild.Companion.MAX_COUNT
 import ui.cli.processor.InterfaceProcessor
 
 class ExpressionBuilder(
@@ -21,7 +21,8 @@ class ExpressionBuilder(
         for (i in 1..MAX_COUNT) {
             interfaceProcessor.renderMessage(INTRO_MESSAGE)
             try {
-                interfaceProcessor.renderMessage(String.format(EXAMPLE,
+                interfaceProcessor.renderMessage(String.format(
+                    EXAMPLE,
                     tokens.joinToString(", ")), false)
                 return ExpressionParser.parse(interfaceProcessor.readLine())
             } catch (e: ExpressionException) {

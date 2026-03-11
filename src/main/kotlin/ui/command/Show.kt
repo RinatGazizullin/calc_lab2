@@ -1,10 +1,10 @@
-package ui.cli.command
+package ui.command
 
 import core.processor.ExpressionProcessor
-import ui.cli.basic.CanRender
-import ui.cli.basic.Command
-import ui.cli.basic.HaveManual
-import ui.cli.render.SystemRender
+import ui.basic.CanRender
+import ui.basic.Command
+import ui.basic.HaveManual
+import ui.render.SystemRender
 
 class Show(
     private val expressionProcessor: ExpressionProcessor,

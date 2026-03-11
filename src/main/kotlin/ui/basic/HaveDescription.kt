@@ -1,4 +1,4 @@
-package ui.cli.basic
+package ui.basic
 
 interface HaveDescription {
     val description: String

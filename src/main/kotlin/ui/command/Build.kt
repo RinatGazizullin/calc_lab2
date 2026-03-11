@@ -1,8 +1,8 @@
-package ui.cli.command
+package ui.command
 
 import core.processor.ExpressionProcessor
-import ui.cli.basic.Command
-import ui.cli.basic.HaveManual
+import ui.basic.Command
+import ui.basic.HaveManual
 
 class Build(private val expressionProcessor: ExpressionProcessor) : Command(Type.BUILD) {
     override val manual: String

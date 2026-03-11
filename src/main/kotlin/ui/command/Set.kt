@@ -1,12 +1,12 @@
-package ui.cli.command
+package ui.command
 
 import core.exception.BuilderException
 import core.exception.ExpressionException
 import core.model.Expression
 import core.processor.ExpressionProcessor
-import ui.cli.basic.CanBuild
-import ui.cli.basic.Command
-import ui.cli.basic.HaveManual
+import ui.basic.CanBuild
+import ui.basic.Command
+import ui.basic.HaveManual
 
 class Set(
     private val expressionProcessor: ExpressionProcessor,

@@ -1,4 +1,4 @@
-package ui.cli.processor
+package ui.cli.utils
 
 import core.model.Border
 import core.model.Expression
@@ -7,14 +7,16 @@ import core.solver.HalfSolver
 import core.solver.IterationSolver
 import core.solver.NewtonSolver
 import core.solver.SimpleSystemSolver
-import ui.cli.basic.CanBuild
-import ui.cli.basic.Command
-import ui.cli.builder.BorderBuilder
-import ui.cli.builder.ExpressionBuilder
-import ui.cli.command.*
-import ui.cli.render.ExpressionRender
-import ui.cli.render.ResultRender
-import ui.cli.render.SystemRender
+import ui.basic.CanBuild
+import ui.basic.Command
+import ui.builder.BorderBuilder
+import ui.builder.ExpressionBuilder
+import ui.cli.processor.InterfaceProcessor
+import ui.render.ExpressionRender
+import ui.render.ResultRender
+import ui.render.SystemRender
+import ui.command.*
+import ui.command.Set
 
 class DataProcessor(
     interfaceProcessor: InterfaceProcessor,

@@ -1,7 +1,7 @@
-package ui.cli.command
+package ui.command
 
-import ui.cli.basic.Command
-import ui.cli.basic.HaveManual
+import ui.basic.Command
+import ui.basic.HaveManual
 
 class Help : Command(Type.HELP) {
     override val manual: String

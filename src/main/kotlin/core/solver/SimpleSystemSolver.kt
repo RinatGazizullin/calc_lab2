@@ -2,6 +2,7 @@ package core.solver
 
 import core.basic.SystemSolver
 import core.model.Border
+import core.model.Expression
 import core.model.Result
 import core.processor.ExpressionProcessor
 
@@ -13,6 +14,12 @@ class SimpleSystemSolver : SystemSolver {
         border: Border,
         tokens: Set<String>
     ): Result {
-        TODO("Not yet implemented")
+        val lambdas: MutableList<Expression> = mutableListOf()
+
+        for (expression in expressionProcessor.exps) {
+
+        }
+
+        TODO("In progress")
     }
 }
