@@ -14,7 +14,7 @@ class ExpressionParser {
     companion object {
         private const val FORMAT_ERROR = "Неверный формат строки"
         private val config = ExpressionConfiguration.builder()
-            .mathContext(MathContext(34, RoundingMode.HALF_UP))
+            .mathContext(MathContext(40, RoundingMode.HALF_UP))
             .build()
 
         fun parse(equation: String): core.model.Expression {

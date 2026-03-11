@@ -4,13 +4,14 @@ import core.basic.SingleSolver
 import core.model.Expression
 import java.math.BigDecimal
 import java.math.MathContext
+import java.math.RoundingMode
 
 class HalfSolver : SingleSolver {
     override val name: String = "Метод половинного деления"
 
     companion object {
         private fun calculateMiddle(a: BigDecimal, b: BigDecimal): BigDecimal {
-            return (a + b).divide(BigDecimal.valueOf(2), MathContext.DECIMAL128)
+            return (a + b).divide(BigDecimal.valueOf(2), MathContext(40, RoundingMode.HALF_UP))
         }
     }
 
