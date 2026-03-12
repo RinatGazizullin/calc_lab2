@@ -17,11 +17,11 @@ class BorderModule(
     private val first = TokenInput(stateManager, 0)
     private val second = TokenInput(stateManager, 1)
 
-    private val leftFirst = BorderInput(stateManager, 0, true)
-    private val rightFirst = BorderInput(stateManager, 0, false)
+    private val leftFirst = BorderInput(stateManager, 0, true, "Левая граница")
+    private val rightFirst = BorderInput(stateManager, 0, false, "Правая граница")
 
-    private val leftSecond = BorderInput(stateManager, 1, true)
-    private val rightSecond = BorderInput(stateManager, 1, false)
+    private val leftSecond = BorderInput(stateManager, 1, true, "Левая граница")
+    private val rightSecond = BorderInput(stateManager, 1, false, "Правая граница")
 
     private val epsilonInput = EpsilonInput(stateManager)
     private val redrawTrigger = mutableStateOf(true)

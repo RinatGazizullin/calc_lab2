@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 import core.basic.Subscriber
 import ui.gui.processor.ApplicationProcessor
 
-abstract class DataInput : Subscriber {
+abstract class DataInput(private val placeholder: String) : Subscriber {
     abstract val state: MutableState<String>
     val trigger = mutableStateOf(true)
 
@@ -30,8 +30,13 @@ abstract class DataInput : Subscriber {
                 state.value = newValue
                 execData(newValue)
             },
-            modifier = modifier
-                .fillMaxSize()
+            placeholder = {
+                androidx.compose.material.Text(
+                    text = placeholder,
+                    color = Color.Gray
+                )
+            },
+            modifier = modifier.fillMaxSize()
                 /*
                 .onFocusChanged { focusState ->
                     if (hadFocus && !focusState.isFocused) {

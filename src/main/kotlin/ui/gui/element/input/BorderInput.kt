@@ -7,8 +7,9 @@ import ui.gui.processor.StateManager
 class BorderInput(
     private val stateManager: StateManager,
     private val index: Int,
-    private val left: Boolean
-) : DataInput(), Subscriber {
+    private val left: Boolean,
+    placeholder: String
+) : DataInput(placeholder), Subscriber {
     private var token = stateManager.tokens[index]
     override var state =
         mutableStateOf(

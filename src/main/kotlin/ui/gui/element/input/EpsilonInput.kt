@@ -6,7 +6,7 @@ import ui.gui.processor.StateManager
 
 class EpsilonInput(
     private val stateManager: StateManager
-) : DataInput(), Subscriber {
+) : DataInput("Погрешность"), Subscriber {
     override var state = mutableStateOf(stateManager.epsilon)
 
     init {

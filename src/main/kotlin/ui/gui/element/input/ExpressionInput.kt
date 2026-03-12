@@ -7,7 +7,7 @@ class ExpressionInput(
     // private val graphicProcessor: GraphicProcessor,
     private val stateManager: StateManager,
     private val index: Int
-) : DataInput() {
+) : DataInput("Нелинейное уравнение") {
     override var state = mutableStateOf(stateManager.inputs[index])
 
     init {

@@ -7,7 +7,7 @@ import ui.gui.processor.StateManager
 class TokenInput(
     private val stateManager: StateManager,
     private val index: Int
-) : DataInput(), Subscriber {
+) : DataInput("Имя переменной"), Subscriber {
     override val state = mutableStateOf(stateManager.tokens[index])
     private var token = stateManager.tokens[index]
 
