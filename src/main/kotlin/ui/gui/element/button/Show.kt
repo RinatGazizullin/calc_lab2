@@ -8,5 +8,6 @@ class Show(
 ) : Button(graphicProcessor, Color(0xFFF9A825), "Показать") {
     override fun execute() {
         prepare()
+        graphicProcessor.endCommands()
     }
 }
