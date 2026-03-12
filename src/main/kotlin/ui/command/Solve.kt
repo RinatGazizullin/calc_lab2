@@ -73,6 +73,8 @@ class Solve(
             return Result(e.message!!, Result.Code.ERROR)
         }
 
+        println(123123)
+
         var counter = 1
         var first = true
         val result = StringBuilder()

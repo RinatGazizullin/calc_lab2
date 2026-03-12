@@ -1,6 +1,5 @@
 package core.processor
 
-import core.basic.Subscriber
 import core.exception.ExpressionException
 import core.model.Expression
 import core.model.Vector
@@ -11,7 +10,8 @@ class ExpressionProcessor {
     val tokens: MutableSet<String> = mutableSetOf()
     val exps: MutableList<Expression> = mutableListOf(
         Examples.quickExample(),
-        Examples.quickExample())
+        Examples.quickExample()
+    )
     var size: Int = exps.size
 
     init {
@@ -87,27 +87,34 @@ class ExpressionProcessor {
         return exps[index].calculate(params)
     }
 
-    fun derivative(params: Map<String, BigDecimal>): Vector {
+    fun derivative(params: Map<String, BigDecimal>, token: String): Vector {
         checkTokens()
         val result = Vector.empty(size)
-        IntRange(0, size).forEach { index -> result.vector[index] = exps[index].derivative(params) }
+        IntRange(0, size).forEach { index -> result.vector[index] = exps[index].derivative(params, token) }
         return result
     }
 
-    fun derivativeByIndex(params: Map<String, BigDecimal>, index: Int): BigDecimal {
+    fun derivativeByIndex(params: Map<String, BigDecimal>, index: Int, token: String): BigDecimal {
         checkIndex(index)
-        return exps[index].derivative(params)
+        return exps[index].derivative(params, token)
     }
 
-    fun secondDerivative(param: Map<String, BigDecimal>): Vector {
+    fun secondDerivative(param: Map<String, BigDecimal>, token: String): Vector {
         checkTokens()
         val result = Vector.empty(size)
-        IntRange(0, size).forEach { index -> result.vector[index] = exps[index].secondDerivative(param) }
+        IntRange(0, size).forEach { index ->
+            result.vector[index] =
+                exps[index].secondDerivative(param, token)
+        }
         return result
     }
 
-    fun secondDerivativeByIndex(params: Map<String, BigDecimal>, index: Int): BigDecimal {
+    fun secondDerivativeByIndex(
+        params: Map<String, BigDecimal>,
+        index: Int,
+        token: String
+    ): BigDecimal {
         checkIndex(index)
-        return exps[index].secondDerivative(params)
+        return exps[index].secondDerivative(params, token)
     }
 }

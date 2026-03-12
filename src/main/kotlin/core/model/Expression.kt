@@ -8,8 +8,8 @@ import java.math.RoundingMode
 class Expression(
     val size: Int,
     val tokens: Set<String>,
-    val body: String = DEFAULT,
-    private val expression: SimpleExpression
+    private val expression: SimpleExpression,
+    val body: String = DEFAULT
 ) {
     companion object {
         private const val DEFAULT = "NO BODY"
@@ -30,25 +30,26 @@ class Expression(
     }
 
     fun derivative(param: BigDecimal, token: String): BigDecimal {
-        return derivative(mapOf(token to param))
+        return derivative(mapOf(token to param), token)
     }
 
-    fun derivative(params: Map<String, BigDecimal>): BigDecimal {
+    fun derivative(params: Map<String, BigDecimal>, token: String): BigDecimal {
         checkTokens(params)
         val left = (expression.apply(params) - expression
-            .apply(params.mapValues { (_, value) -> value - EPSILON }))
+            .apply(params.mapValues { (key, value) -> if (key == token) value - EPSILON else value }))
             .divide(EPSILON, MathContext(40, RoundingMode.HALF_UP))
-        val right = (expression.apply(params.mapValues { (_, value) ->
-            value + EPSILON
-        }) - expression.apply(params))
+        val right = (expression.apply(params.mapValues {  (key, value) ->
+            if (key == token) value + EPSILON else value }) - expression.apply(params))
             .divide(EPSILON, MathContext(40, RoundingMode.HALF_UP))
 
         if ((left - right).abs() > CHECK_DERIVATIVE) {
             throw ExpressionException(DERIVATIVE_ERROR)
         }
 
-        return (expression.apply(params.mapValues { (_, value) -> value + EPSILON }) -
-                expression.apply(params.mapValues { (_, value) -> value - EPSILON }))
+        return (expression.apply(params.mapValues {  (key, value) ->
+            if (key == token) value + EPSILON else value }) -
+                expression.apply(params.mapValues  { (key, value) ->
+                    if (key == token) value - EPSILON else value }))
             .divide(
                 EPSILON * BigDecimal.valueOf(2),
                 MathContext(40, RoundingMode.HALF_UP)
@@ -56,14 +57,16 @@ class Expression(
     }
 
     fun secondDerivative(param: BigDecimal, token: String): BigDecimal {
-        return secondDerivative(mapOf(token to param))
+        return secondDerivative(mapOf(token to param), token)
     }
 
-    fun secondDerivative(params: Map<String, BigDecimal>): BigDecimal {
+    fun secondDerivative(params: Map<String, BigDecimal>, token: String): BigDecimal {
         checkTokens(params)
-        val dRight = derivative(params.mapValues { (_, value) -> value + EPSILON })
-        val dLeft = derivative(params.mapValues { (_, value) -> value - EPSILON })
-        val dCenter = derivative(params)
+        val dRight = derivative(params.mapValues {  (key, value) ->
+            if (key == token) value + EPSILON else value  }, token)
+        val dLeft = derivative(params.mapValues {  (key, value) ->
+            if (key == token) value - EPSILON else value  }, token)
+        val dCenter = derivative(params, token)
 
         if (((dCenter - dLeft).divide(
                 EPSILON, MathContext(

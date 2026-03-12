@@ -10,5 +10,6 @@ class SolveAll(
     override fun execute() {
         prepare()
         graphicProcessor.executeCommand(Command.Type.SOLVE)
+        graphicProcessor.endCommands()
     }
 }

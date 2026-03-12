@@ -40,11 +40,11 @@ class IterationSolver : SingleSolver {
             -BigDecimal.ONE.divide(maxDerivative, MathContext(40, RoundingMode.HALF_UP))
         else BigDecimal.ONE.divide(maxDerivative, MathContext(40, RoundingMode.HALF_UP))
 
-        val phi = Expression(1, setOf(token)) { data: Map<String, BigDecimal> ->
+        val phi = Expression(1, setOf(token), { data: Map<String, BigDecimal> ->
             data[token]!! + lambda * expression.calculate(
                 data[token]!!, token
             )
-        }
+        })
 
         val q = LongRange(0, STEPS).maxOf { index ->
             phi.derivative(left + step * BigDecimal.valueOf(index), token).abs()
