@@ -98,12 +98,14 @@ class GraphModule(
 
         var xMin = bX.first.toDoubleOrNull() ?: -5.0
         xMin -= abs(xMin)
+        var xMax = bX.second.toDoubleOrNull() ?: 5.0
+        xMax += abs(xMax)
 
-        val xMax = (bX.second.toDoubleOrNull() ?: 5.0) * 2
         var yMin = bY.first.toDoubleOrNull() ?: -5.0
         yMin -= abs(yMin)
+        var yMax = bY.second.toDoubleOrNull() ?: 5.0
+        yMax += abs(yMax)
 
-        val yMax = (bY.second.toDoubleOrNull() ?: 5.0) * 2
         val rangeX = xMax - xMin
         val rangeY = yMax - yMin
 
