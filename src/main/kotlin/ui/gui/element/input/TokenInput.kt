@@ -25,9 +25,6 @@ class TokenInput(
             return
         }
 
-        println(stateManager.borders)
-        println(stateManager.tokens)
-
         if (value != token) {
             stateManager.borders[value] = stateManager.borders[token]!!
             stateManager.borders.remove(token)

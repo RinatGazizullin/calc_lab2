@@ -6,7 +6,6 @@ import core.model.Border
 import core.model.Expression
 import core.model.Result
 import core.processor.ExpressionProcessor
-import core.solver.IterationSolver.Companion
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
@@ -20,33 +19,51 @@ class SimpleSystemSolver : SystemSolver {
         private const val ENOUGH_ERROR = "Достаточное условие метода простой итерации не выполнено"
     }
 
+    private fun sorted(
+        expressions: MutableList<Expression>,
+        tokens: List<String>,
+        values: Map<String, BigDecimal>
+    ): MutableList<Expression> {
+        val result = mutableListOf<Expression>()
+        val exits = expressions.toMutableList()
+
+        for (token in tokens) {
+            result.add(exits.sortedBy { elem -> elem.derivative(values, token).abs() }.reversed().first())
+            exits.remove(result.last())
+        }
+
+        return result
+    }
+
     override fun solve(
         expressionProcessor: ExpressionProcessor,
         border: Border,
         tokens: Set<String>
     ): Result {
-        var init = getInitialApproximation(border, tokens, expressionProcessor.size)
-        val lambdas = mutableListOf<BigDecimal>()
         val tokensList = tokens.sorted()
+        val lambdas = mutableListOf<BigDecimal>()
+        var init = getInitialApproximation(border, tokensList, expressionProcessor.size)
+        val expressions = sorted(expressionProcessor.exps, tokensList, init)
 
-        for (i in expressionProcessor.exps.indices) {
+        for (i in expressions.indices) {
             val token = tokensList[i]
-            val derivativeValue = expressionProcessor.derivativeByIndex(init, i, token)
+            val derivativeValue = expressions[i].derivative(init, token)
             val lambda = -BigDecimal.ONE.divide(derivativeValue, MathContext(40, RoundingMode.HALF_UP))
             lambdas.add(lambda)
         }
+
         val phi = IntRange(0, expressionProcessor.size - 1).map { index ->
             Expression(
                 expressionProcessor.size,
-                expressionProcessor.tokens,
+                tokens,
                 { params: Map<String, BigDecimal> ->
                     params[tokensList[index]]!! +
-                            lambdas[index] * expressionProcessor.calculateByIndex(params, index)
+                            lambdas[index] * expressions[index].calculate(params)
                 }
             )
         }.toList()
 
-        check(phi, tokens, init)
+        check(phi, tokensList, init)
         var iterations = 0
 
         do {
@@ -70,28 +87,23 @@ class SimpleSystemSolver : SystemSolver {
 
     private fun check(
         phi: List<Expression>,
-        tokens: Set<String>,
+        tokens: List<String>,
         values: Map<String, BigDecimal>
     ) {
-        val sorted = tokens.sorted()
-        if (phi.maxOf { elem -> sorted.sumOf { token ->
+        if (phi.maxOf { elem -> tokens.sumOf { token ->
             elem.derivative(values, token) } } >= BigDecimal(10)) {
-            println(phi.maxOf { elem -> sorted.sumOf { token ->
-                elem.derivative(values, token) } })
             throw ExpressionException(ENOUGH_ERROR)
         }
     }
 
     private fun getInitialApproximation(
         border: Border,
-        tokens: Set<String>,
+        tokens: List<String>,
         size: Int
     ): MutableMap<String, BigDecimal> {
         val result = mutableMapOf<String, BigDecimal>()
-        val sortedTokens = tokens.sorted()
-
         for (i in 0 until size) {
-            val token = sortedTokens[i]
+            val token = tokens[i]
             val tokenBorder = border.borders[token]!!
             val initialValue =
                 tokenBorder.first.add(tokenBorder.second)

@@ -92,7 +92,6 @@ class Solve(
                         )
                     )
                 } catch (e: ExpressionException) {
-                    e.printStackTrace()
                     result.append(e.message)
                 }
             }
