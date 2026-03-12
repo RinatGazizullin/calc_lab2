@@ -13,7 +13,7 @@ class StateManager(val expressionProcessor: ExpressionProcessor) {
 
     init {
         for (token in tokens) {
-            borders[token] = Pair(-2", "3")
+            borders[token] = Pair("-2", "3")
         }
     }
 
