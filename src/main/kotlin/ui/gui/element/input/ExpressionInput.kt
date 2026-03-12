@@ -15,8 +15,8 @@ class ExpressionInput(
     }
 
     override fun changed() {
-        trigger.value = !trigger.value
         state.value = stateManager.inputs[index]
+        trigger.value = !trigger.value
     }
 
     /*

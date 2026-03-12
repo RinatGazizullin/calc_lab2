@@ -6,7 +6,7 @@ import core.processor.ExpressionProcessor
 class StateManager(val expressionProcessor: ExpressionProcessor) {
     val inputs = expressionProcessor.exps.map { exp -> exp.body }.toMutableList()
     val tokens = mutableListOf("x", "y")
-    val epsilon = "1E-6"
+    var epsilon = "1E-6"
     val borders: MutableMap<String, Pair<String, String>> = mutableMapOf()
     private val subscribers: MutableSet<Subscriber> = mutableSetOf()
 

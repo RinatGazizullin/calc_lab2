@@ -4,22 +4,21 @@ import androidx.compose.runtime.mutableStateOf
 import core.basic.Subscriber
 import ui.gui.processor.StateManager
 
-class TokenInput(
-    private val stateManager: StateManager,
-    private val index: Int
+class EpsilonInput(
+    private val stateManager: StateManager
 ) : DataInput(), Subscriber {
-    override val state = mutableStateOf(stateManager.tokens[index])
+    override var state = mutableStateOf(stateManager.epsilon)
 
     init {
         stateManager.subscribe(this)
     }
 
     override fun changed() {
-        state.value = stateManager.inputs[index]
+        state.value = stateManager.epsilon
         trigger.value = !trigger.value
     }
 
     override fun execData(value: String) {
-        stateManager.tokens[index] = value
+        stateManager.epsilon = value
     }
 }

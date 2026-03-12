@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import core.basic.Subscriber
 import ui.gui.processor.ApplicationProcessor.Companion.PADDING_ROUND
 import ui.gui.element.input.BorderInput
+import ui.gui.element.input.EpsilonInput
 import ui.gui.element.input.TokenInput
 import ui.gui.processor.StateManager
 
@@ -22,6 +23,7 @@ class BorderModule(
     private val leftSecond = BorderInput(stateManager, 1, true)
     private val rightSecond = BorderInput(stateManager, 1, false)
 
+    private val epsilonInput = EpsilonInput(stateManager)
     private val redrawTrigger = mutableStateOf(true)
 
     init {
@@ -108,6 +110,13 @@ class BorderModule(
                         rightSecond.content()
                     }
                 }
+            }
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+            ) {
+                epsilonInput.content()
             }
         }
     }
