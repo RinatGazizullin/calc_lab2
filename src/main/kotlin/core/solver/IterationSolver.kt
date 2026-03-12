@@ -36,7 +36,7 @@ class IterationSolver : SingleSolver {
         val maxDerivative = LongRange(0, STEPS).maxOf { index ->
             expression.derivative(left + step * BigDecimal.valueOf(index), token).abs()
         }
-        val lambda = if (expression.derivative(left, token) > BigDecimal.ZERO)
+        val lambda = if (expression.derivative(left, token).signum() > 0)
             -BigDecimal.ONE.divide(maxDerivative, MathContext(40, RoundingMode.HALF_UP))
         else BigDecimal.ONE.divide(maxDerivative, MathContext(40, RoundingMode.HALF_UP))
 
@@ -64,12 +64,15 @@ class IterationSolver : SingleSolver {
         do {
             x = new
             new = phi.calculate(x, token)
-            iterations++
 
-            if (iterations > MAX_ITERATIONS) {
+            if (++iterations > MAX_ITERATIONS) {
                 throw ExpressionException(ITER_ERROR)
             }
-        } while ((x - new).abs() > border.epsilon)
+        } while ((x - new).abs() > if (q > BigDecimal(0.5)) ((BigDecimal.ZERO - q).divide(
+                q,
+                MathContext(40, RoundingMode.HALF_UP)
+            ) * border.epsilon) else border.epsilon
+        )
 
         return Result(mutableMapOf(token to new))
     }

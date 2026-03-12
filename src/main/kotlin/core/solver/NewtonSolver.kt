@@ -1,6 +1,7 @@
 package core.solver
 
 import core.basic.SingleSolver
+import core.exception.ExpressionException
 import core.model.Border
 import core.model.Expression
 import core.model.Result
@@ -12,6 +13,9 @@ class NewtonSolver : SingleSolver {
     override val name: String = "Метод касательных"
 
     companion object {
+        private const val MAX_ITERATIONS = 1E5
+        private const val ITER_ERROR = "Достигнуто максимальное количество итераций"
+
         private fun calculateNew(expression: Expression, value: BigDecimal, token: String): BigDecimal {
             return value - expression.calculate(value, token).divide(
                 expression
@@ -37,8 +41,13 @@ class NewtonSolver : SingleSolver {
             else
                 right
 
+        var iterations = 0
         do {
             x = calculateNew(expression, x, token)
+
+            if (++iterations > MAX_ITERATIONS) {
+                throw ExpressionException(ITER_ERROR)
+            }
         } while ((expression.calculate(x, token).divide(
                 expression.derivative(x, token),
                 MathContext(40, RoundingMode.HALF_UP)
