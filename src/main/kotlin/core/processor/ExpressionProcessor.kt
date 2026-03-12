@@ -16,7 +16,7 @@ class ExpressionProcessor {
     var size: Int = exps.size
 
     init {
-        checkTokens()
+        reCalcTokens()
     }
 
     companion object {
