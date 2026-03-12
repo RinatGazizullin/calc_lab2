@@ -7,10 +7,11 @@ import core.processor.ExpressionProcessor
 import ui.basic.CanBuild
 import ui.basic.Command
 import ui.basic.HaveManual
+import kotlin.collections.Set
 
 class Set(
     private val expressionProcessor: ExpressionProcessor,
-    private val builder: CanBuild<Expression>
+    private val builder: CanBuild<Expression, Pair<Int, Set<String>>>
 ) : Command(Type.SET) {
     override val manual: String
 
@@ -39,7 +40,7 @@ class Set(
                 val index = arguments.args[0].toInt() - 1
                 expressionProcessor.checkIndex(index)
                 expressionProcessor.changeExpression(builder
-                    .build(expressionProcessor.tokens), index)
+                    .build(Pair(index, expressionProcessor.tokens)), index)
                 return Result(GOOD_MESSAGE, Result.Code.GOOD)
             } catch (e: NumberFormatException) {
                 return Result(FORMAT_MESSAGE, Result.Code.ERROR)

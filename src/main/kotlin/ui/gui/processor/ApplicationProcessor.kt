@@ -20,11 +20,11 @@ import java.awt.Toolkit
 
 class ApplicationProcessor(
     expressionProcessor: ExpressionProcessor,
-    graphicProcessor: GraphicProcessor
+    graphicProcessor: GraphicProcessor,
+    stateManager: StateManager
 ) {
-    private val instrumentModule = InstrumentModule(graphicProcessor, StateManager(expressionProcessor)
-    )
-    private val infoModule = InfoModule(expressionProcessor, graphicProcessor)
+    private val instrumentModule = InstrumentModule(graphicProcessor, stateManager)
+    private val infoModule = InfoModule(expressionProcessor, graphicProcessor, stateManager)
 
     companion object {
         val PADDING_ROUND = 10.dp

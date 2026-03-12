@@ -11,12 +11,12 @@ import java.math.BigDecimal
 class BorderGuiBuilder(
     private val expressionProcessor: ExpressionProcessor,
     private val stateManager: StateManager
-) : CanBuild<Border> {
+) : CanBuild<Border, Set<String>> {
     override fun build(tokens: Set<String>): Border {
         val checkTokens = stateManager.tokens
         val borders = stateManager.borders
 
-        for (token in expressionProcessor.tokens) {
+        for (token in tokens) {
             if (!checkTokens.contains(token) || !borders.containsKey(token)) {
                 throw BuilderException("Не был введен нужный $token токен")
             }
@@ -24,7 +24,7 @@ class BorderGuiBuilder(
 
         val result: MutableMap<String, Pair<BigDecimal, BigDecimal>> = mutableMapOf()
 
-        for (token in checkTokens) {
+        for (token in tokens) {
             val left: BigDecimal
             val right: BigDecimal
 
@@ -37,7 +37,7 @@ class BorderGuiBuilder(
 
             val s2 = TextUtils.prepare(borders[token]!!.second)
             try {
-                right = s1.toBigDecimal()
+                right = s2.toBigDecimal()
             } catch (e: NumberFormatException) {
                 throw BuilderException("Значение $s2 должно быть числом")
             }

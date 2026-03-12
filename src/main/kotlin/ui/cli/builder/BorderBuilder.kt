@@ -10,7 +10,7 @@ import java.math.BigDecimal
 
 class BorderBuilder(
     private val interfaceProcessor: InterfaceProcessor
-) : CanBuild<Border> {
+) : CanBuild<Border, Set<String>> {
     companion object {
         private const val EPSILON = "Введите погрешность - "
         private const val LEFT = "Введите левую границу для <%s> - "
@@ -21,11 +21,11 @@ class BorderBuilder(
         private const val BUILDER_ERROR = "Не удалось получить границы измерения"
     }
 
-    override fun build(tokens: Set<String>): Border {
+    override fun build(data: Set<String>): Border {
         interfaceProcessor.renderMessage(INTRO_MESSAGE)
         val result: MutableMap<String, Pair<BigDecimal, BigDecimal>> = mutableMapOf()
 
-        for (token in tokens) {
+        for (token in data) {
             result[token] = buildToken(token)
         }
 

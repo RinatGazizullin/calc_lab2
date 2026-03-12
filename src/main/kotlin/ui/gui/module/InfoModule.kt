@@ -7,13 +7,15 @@ import androidx.compose.ui.Modifier
 import core.processor.ExpressionProcessor
 import ui.gui.processor.ApplicationProcessor.Companion.PADDING_ROUND
 import ui.gui.processor.GraphicProcessor
+import ui.gui.processor.StateManager
 
 class InfoModule(
     expressionProcessor: ExpressionProcessor,
-    graphicProcessor: GraphicProcessor
+    graphicProcessor: GraphicProcessor,
+    stateManager: StateManager
 ) {
     private val graphModule = GraphModule(expressionProcessor)
-    private val resultModule = ResultModule(graphicProcessor)
+    private val resultModule = ResultModule(stateManager, graphicProcessor)
 
     @Composable
     fun content() {

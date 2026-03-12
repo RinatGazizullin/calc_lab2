@@ -13,12 +13,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.sp
 import ui.gui.processor.ApplicationProcessor.Companion.PADDING_ROUND
+import ui.gui.processor.GraphicProcessor
 
 abstract class Button(
+    private val graphicProcessor: GraphicProcessor,
     private val color: Color,
     private val text: String,
 ) {
     abstract fun execute()
+
+    fun prepare() {
+        graphicProcessor.prepare()
+    }
 
     @Composable
     fun content() {

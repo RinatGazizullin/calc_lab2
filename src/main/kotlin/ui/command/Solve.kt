@@ -6,18 +6,18 @@ import core.exception.BuilderException
 import core.exception.ExpressionException
 import core.exception.SolveException
 import core.model.Border
-import core.model.Result
 import core.processor.ExpressionProcessor
 import core.utils.TextUtils
 import ui.basic.CanBuild
 import ui.basic.CanRender
 import ui.basic.Command
 import ui.basic.HaveManual
+import kotlin.collections.Set
 
 class Solve(
     private val expressionProcessor: ExpressionProcessor,
     private val render: CanRender<core.model.Result>,
-    private val builder: CanBuild<Border>,
+    private val builder: CanBuild<Border, Set<String>>,
     private val singles: List<SingleSolver>,
     private val systems: List<SystemSolver>
 ) : Command(Type.SOLVE) {
@@ -39,7 +39,6 @@ class Solve(
         private const val TOKENS_ERROR = "Неверное количество переменных"
         private const val ARGS_ERROR = "Значение <%s> должно быть числом"
         private const val ARGUMENT_DESCRIPTION = "Индекс НУ (нелинейного уравнения)"
-        private const val NO_ARGS_ERROR = "Необходимо ввести один аргумент $ARGUMENT_NAME"
     }
 
     override fun execute(arguments: Arguments): Result {

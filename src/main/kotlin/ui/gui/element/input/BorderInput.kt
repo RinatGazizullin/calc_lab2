@@ -34,6 +34,12 @@ class BorderInput(
     }
 
     override fun execData(value: String) {
+        if (value.isEmpty()) {
+            return
+        }
+
+        token = stateManager.tokens[index]
+
         if (left) {
             stateManager.borders[token] = Pair(value, stateManager.borders[token]!!.second)
         } else {

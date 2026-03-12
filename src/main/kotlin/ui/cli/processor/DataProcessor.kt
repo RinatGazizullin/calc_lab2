@@ -24,8 +24,8 @@ class DataProcessor(
     val expressionProcessor = ExpressionProcessor()
 
     init {
-        val builderExpression: CanBuild<Expression> = ExpressionBuilder(interfaceProcessor)
-        val builderBorder: CanBuild<Border> = BorderBuilder(interfaceProcessor)
+        val builderExpression: CanBuild<Expression, Pair<Int, kotlin.collections.Set<String>>> = ExpressionBuilder(interfaceProcessor)
+        val builderBorder: CanBuild<Border, kotlin.collections.Set<String>> = BorderBuilder(interfaceProcessor)
 
         commands[Command.Type.EXAMPLE] = Example(expressionProcessor)
         commands[Command.Type.EXIT] = Exit()

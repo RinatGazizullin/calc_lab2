@@ -4,8 +4,8 @@ import core.basic.Subscriber
 import core.processor.ExpressionProcessor
 
 class StateManager(val expressionProcessor: ExpressionProcessor) {
-    val inputs = expressionProcessor.exps.map { exp -> exp.body }.toMutableList()
-    val tokens = mutableListOf("x", "y")
+    var inputs = expressionProcessor.exps.map { exp -> exp.body }.toMutableList()
+    var tokens = mutableListOf("x", "y")
     var epsilon = "1E-6"
     var outputData = ""
     val borders: MutableMap<String, Pair<String, String>> = mutableMapOf()
@@ -22,6 +22,7 @@ class StateManager(val expressionProcessor: ExpressionProcessor) {
     }
 
     fun sendMessage() {
+        inputs = expressionProcessor.exps.map { exp -> exp.body }.toMutableList()
         subscribers.forEach { subscriber -> subscriber.changed() }
     }
 

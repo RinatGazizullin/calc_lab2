@@ -10,20 +10,18 @@ import ui.cli.processor.InterfaceProcessor
 
 class ExpressionBuilder(
     private val interfaceProcessor: InterfaceProcessor,
-) : CanBuild<Expression> {
+) : CanBuild<Expression, Pair<Int, Set<String>>> {
     companion object {
-        private const val EXAMPLE = "(...) = "
         private const val INTRO_MESSAGE = "Введите функцию!"
         private const val BUILDER_ERROR = "Не удалось получить новую функцию"
     }
 
-    override fun build(tokens: Set<String>): Expression {
+    override fun build(data: Pair<Int, Set<String>>): Expression {
         for (i in 1..MAX_COUNT) {
             interfaceProcessor.renderMessage(INTRO_MESSAGE)
             try {
-                interfaceProcessor.renderMessage(String.format(
-                    EXAMPLE,
-                    tokens.joinToString(", ")), false)
+                interfaceProcessor.renderMessage(
+                    "${data.first}) (${data.second.joinToString(", ")}) = ", false)
                 return ExpressionParser.parse(interfaceProcessor.readLine())
             } catch (e: ExpressionException) {
                 interfaceProcessor.renderError(e.message!!)

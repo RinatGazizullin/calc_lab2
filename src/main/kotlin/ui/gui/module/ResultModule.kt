@@ -7,10 +7,14 @@ import ui.gui.element.data.Output
 import ui.gui.element.button.SolveAll
 import ui.gui.processor.ApplicationProcessor.Companion.PADDING_ROUND
 import ui.gui.processor.GraphicProcessor
+import ui.gui.processor.StateManager
 
-class ResultModule(graphicProcessor: GraphicProcessor) {
+class ResultModule(
+    stateManager: StateManager,
+    graphicProcessor: GraphicProcessor
+) {
     private val solve = SolveAll(graphicProcessor)
-    private val data = Output()
+    private val data = Output(stateManager)
 
     @Composable
     fun content() {
