@@ -14,7 +14,7 @@ class InfoModule(
     graphicProcessor: GraphicProcessor,
     stateManager: StateManager
 ) {
-    private val graphModule = GraphModule(expressionProcessor)
+    private val graphModule = GraphModule(expressionProcessor, stateManager)
     private val resultModule = ResultModule(stateManager, graphicProcessor)
 
     @Composable
@@ -24,7 +24,7 @@ class InfoModule(
         ) {
             Box(
                 modifier = Modifier
-                    .weight(6f)
+                    .weight(5f)
                     .fillMaxWidth()
                     .padding(PADDING_ROUND),
             ) {
@@ -33,7 +33,7 @@ class InfoModule(
 
             Box(
                 modifier = Modifier
-                    .weight(1f)
+                    .weight(2f)
                     .fillMaxWidth()
             ) {
                 resultModule.content()

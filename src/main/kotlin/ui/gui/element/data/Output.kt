@@ -40,8 +40,7 @@ class Output(
                 .background(
                     color = Color.White,
                     shape = RoundedCornerShape(ApplicationProcessor.PADDING_ROUND)
-                )
-                .padding(horizontal = 16.dp, vertical = 12.dp),
+                ),
             contentAlignment = Alignment.CenterStart
         ) {
             if (value.value.isNotEmpty()) {
