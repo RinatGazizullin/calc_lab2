@@ -10,12 +10,27 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.background
+import core.basic.Subscriber
 import ui.gui.processor.ApplicationProcessor
+import ui.gui.processor.StateManager
 
-class Output {
+class Output(
+    private val stateManager: StateManager
+) : Subscriber {
+    private val value = mutableStateOf(stateManager.outputData)
+    private val trigger = mutableStateOf(false)
+
+    init {
+        stateManager.subscribe(this)
+    }
+
+    override fun changed() {
+        value.value = stateManager.outputData
+        trigger.value = !trigger.value
+    }
+
     @Composable
     fun content(
-        value: String = "",
         modifier: Modifier = Modifier,
         placeholder: String = "Результат..."
     ) {
@@ -29,9 +44,9 @@ class Output {
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             contentAlignment = Alignment.CenterStart
         ) {
-            if (value.isNotEmpty()) {
+            if (value.value.isNotEmpty()) {
                 Text(
-                    text = value,
+                    text = value.value,
                     fontSize = 16.sp,
                     color = Color.Black
                 )
