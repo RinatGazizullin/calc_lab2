@@ -6,21 +6,16 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import core.processor.ExpressionProcessor
 import ui.gui.processor.GraphicProcessor
+import ui.gui.processor.StateManager
 
 class InstrumentModule(
-    expressionProcessor: ExpressionProcessor,
-    graphicProcessor: GraphicProcessor
+    graphicProcessor: GraphicProcessor,
+    stateManager: StateManager
 ) {
-    private val input1 = InputModule(expressionProcessor, graphicProcessor, FIRST)
-    private val input2 = InputModule(expressionProcessor, graphicProcessor, SECOND)
-    private val output = ResultModule()
-
-    companion object {
-        private const val FIRST = 0
-        private const val SECOND = 1
-    }
+    private val input1 = InputModule(graphicProcessor, stateManager, 0)
+    private val input2 = InputModule(graphicProcessor, stateManager, 1)
+    private val borderModule = BorderModule(stateManager)
 
     @Composable
     fun content() {
@@ -45,10 +40,10 @@ class InstrumentModule(
 
             Box(
                 modifier = Modifier
-                    .weight(1f)
+                    .weight(2f)
                     .fillMaxWidth()
             ) {
-                output.content()
+                borderModule.content()
             }
         }
     }

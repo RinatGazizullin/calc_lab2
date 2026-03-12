@@ -4,7 +4,7 @@ import ui.basic.Command
 import ui.basic.Processor
 
 class GraphicProcessor : Processor {
-    private val dataProcessor = DataProcessor()
+    val dataProcessor = DataProcessor()
 
     companion object {
         private const val NO_COMMAND_ERROR = "Команда <%s> не была найдена"

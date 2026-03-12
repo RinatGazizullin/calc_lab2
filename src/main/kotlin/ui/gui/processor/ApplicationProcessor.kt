@@ -14,6 +14,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import core.processor.ExpressionProcessor
+import ui.gui.module.InfoModule
 import ui.gui.module.InstrumentModule
 import java.awt.Toolkit
 
@@ -21,7 +22,9 @@ class ApplicationProcessor(
     expressionProcessor: ExpressionProcessor,
     graphicProcessor: GraphicProcessor
 ) {
-    private val instrumentModule = InstrumentModule(expressionProcessor, graphicProcessor)
+    private val instrumentModule = InstrumentModule(graphicProcessor, StateManager(expressionProcessor)
+    )
+    private val infoModule = InfoModule(expressionProcessor, graphicProcessor)
 
     companion object {
         val PADDING_ROUND = 10.dp
@@ -78,10 +81,7 @@ class ApplicationProcessor(
                     .padding(PADDING_ROUND),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = "Правая панель",
-                    color = Color.DarkGray
-                )
+                infoModule.content()
             }
         }
     }

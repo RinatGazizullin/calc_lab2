@@ -3,55 +3,38 @@ package ui.gui.module
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import ui.gui.element.Output
-import ui.gui.element.ShowAll
-import ui.gui.element.SolveAll
+import ui.gui.element.data.Output
+import ui.gui.element.button.SolveAll
 import ui.gui.processor.ApplicationProcessor.Companion.PADDING_ROUND
+import ui.gui.processor.GraphicProcessor
 
-class ResultModule {
-    private val solve = SolveAll()
-    private val show = ShowAll()
+class ResultModule(graphicProcessor: GraphicProcessor) {
+    private val solve = SolveAll(graphicProcessor)
     private val data = Output()
 
     @Composable
     fun content() {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(PADDING_ROUND),
-            verticalArrangement = Arrangement.spacedBy(PADDING_ROUND)
+            horizontalArrangement = Arrangement.spacedBy(PADDING_ROUND)
         ) {
             Box(
                 modifier = Modifier
-                    .weight(1f)
+                    .weight(3f)
                     .fillMaxWidth()
                 // .background(Color.DarkGray)
             ) {
                 data.content()
             }
 
-            Row(
+            Box(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(PADDING_ROUND)
+                    .fillMaxHeight()
             ) {
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight()
-                ) {
-                    solve.content()
-                }
-
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight()
-                ) {
-                    show.content()
-                }
+                solve.content()
             }
         }
     }

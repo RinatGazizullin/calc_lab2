@@ -3,23 +3,19 @@ package ui.gui.module
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import core.processor.ExpressionProcessor
-import ui.gui.element.Example
-import ui.gui.element.Input
-import ui.gui.element.Show
-import ui.gui.element.Solve
+import ui.gui.element.button.Solve
+import ui.gui.element.input.ExpressionInput
 import ui.gui.processor.ApplicationProcessor.Companion.PADDING_ROUND
 import ui.gui.processor.GraphicProcessor
+import ui.gui.processor.StateManager
 
 class InputModule(
-    expressionProcessor: ExpressionProcessor,
     graphicProcessor: GraphicProcessor,
+    stateManager: StateManager,
     index: Int
 ) {
     private val solve = Solve(index, graphicProcessor)
-    private val show = Show()
-    private val delete = Example(index, graphicProcessor)
-    private val data = Input(expressionProcessor, graphicProcessor, index)
+    private val data = ExpressionInput(stateManager, index)
 
     @Composable
     fun content() {
@@ -38,35 +34,12 @@ class InputModule(
                 data.content()
             }
 
-            Row(
+            Box(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(PADDING_ROUND)
+                    .fillMaxHeight()
             ) {
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight()
-                ) {
-                    solve.content()
-                }
-
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight()
-                ) {
-                    show.content()
-                }
-
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight()
-                ) {
-                    delete.content()
-                }
+                solve.content()
             }
         }
     }

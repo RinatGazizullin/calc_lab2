@@ -1,4 +1,4 @@
-package ui.gui.module
+package ui.gui.element.button
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
