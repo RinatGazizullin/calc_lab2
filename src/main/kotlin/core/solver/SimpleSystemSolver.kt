@@ -46,15 +46,14 @@ class SimpleSystemSolver : SystemSolver {
             )
         }.toList()
 
+        check(phi, tokens, init)
         var iterations = 0
 
         do {
-            check(phi, tokens, init)
-
             val newValue = init
             init = mutableMapOf()
             IntRange(0, expressionProcessor.size - 1).forEach {
-                index -> init[tokensList[index]] = phi[index].calculate(init)
+                index -> init[tokensList[index]] = phi[index].calculate(newValue)
             }
 
             val maxDiff = newValue.keys.maxOf { key ->
@@ -76,7 +75,9 @@ class SimpleSystemSolver : SystemSolver {
     ) {
         val sorted = tokens.sorted()
         if (phi.maxOf { elem -> sorted.sumOf { token ->
-            elem.derivative(values, token) } } >= BigDecimal.ONE) {
+            elem.derivative(values, token) } } >= BigDecimal(10)) {
+            println(phi.maxOf { elem -> sorted.sumOf { token ->
+                elem.derivative(values, token) } })
             throw ExpressionException(ENOUGH_ERROR)
         }
     }

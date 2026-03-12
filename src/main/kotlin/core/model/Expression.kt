@@ -91,6 +91,7 @@ class Expression(
 
     private fun checkTokens(params: Map<String, BigDecimal>) {
         if (tokens.any { elem -> !params.containsKey(elem) }) {
+            println(params)
             throw ExpressionException(TOKEN_ERROR)
         }
     }

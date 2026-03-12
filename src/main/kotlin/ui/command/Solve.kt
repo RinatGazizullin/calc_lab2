@@ -19,7 +19,7 @@ class Solve(
     private val render: CanRender<core.model.Result>,
     private val builder: CanBuild<Border, Set<String>>,
     private val singles: List<SingleSolver>,
-    private val systems: List<SystemSolver>
+    private val systems: List<SystemSolver>,
 ) : Command(Type.SOLVE) {
     override val manual: String
 
@@ -73,8 +73,6 @@ class Solve(
             return Result(e.message!!, Result.Code.ERROR)
         }
 
-        println(123123)
-
         var counter = 1
         var first = true
         val result = StringBuilder()
@@ -85,13 +83,16 @@ class Solve(
                 result.append("${counter++}) ${solver.name}").appendLine()
                 try {
                     result.append(
-                        solver.solve(
-                            expressionProcessor,
-                            multi,
-                            tokens
+                        render.render(
+                            solver.solve(
+                                expressionProcessor,
+                                multi,
+                                tokens
+                            )
                         )
                     )
                 } catch (e: ExpressionException) {
+                    e.printStackTrace()
                     result.append(e.message)
                 }
             }
