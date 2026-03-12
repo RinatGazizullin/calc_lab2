@@ -3,6 +3,7 @@ package ui.gui.module
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -10,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
 import core.basic.Subscriber
 import core.processor.ExpressionProcessor
 import ui.gui.processor.StateManager
@@ -21,6 +23,7 @@ import java.awt.image.BufferedImage
 import java.math.BigDecimal
 import kotlin.math.abs
 import kotlin.math.ceil
+import kotlin.math.round
 
 class GraphModule(
     private val expressionProcessor: ExpressionProcessor,
@@ -72,7 +75,11 @@ class GraphModule(
             }
 
             if (isComputing) {
-                CircularProgressIndicator(color = Color.Green)
+                CircularProgressIndicator(
+                    color = Color(0xFF228B22),
+                    strokeWidth = 4.dp,
+                    strokeCap = androidx.compose.ui.graphics.StrokeCap.Round
+                )
             }
         }
     }
@@ -124,7 +131,7 @@ class GraphModule(
                             img.setRGB(px, py, secondColor)
                         }
                     }
-                } catch (e: Exception) {
+                } catch (_: Exception) {
                 }
             }
         }
