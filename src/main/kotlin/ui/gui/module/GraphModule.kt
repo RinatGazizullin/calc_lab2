@@ -96,9 +96,13 @@ class GraphModule(
         g.color = java.awt.Color.WHITE
         g.fillRect(0, 0, width, height)
 
-        val xMin = (bX.first.toDoubleOrNull() ?: -5.0) * 2
+        var xMin = bX.first.toDoubleOrNull() ?: -5.0
+        xMin -= abs(xMin)
+
         val xMax = (bX.second.toDoubleOrNull() ?: 5.0) * 2
-        val yMin = (bY.first.toDoubleOrNull() ?: -5.0) * 2
+        var yMin = bY.first.toDoubleOrNull() ?: -5.0
+        yMin -= abs(yMin)
+
         val yMax = (bY.second.toDoubleOrNull() ?: 5.0) * 2
         val rangeX = xMax - xMin
         val rangeY = yMax - yMin
@@ -212,15 +216,15 @@ class GraphModule(
         g.color = java.awt.Color.BLACK
 
         g.drawString(
-            labelX,
-            width - labelMetrics.stringWidth(labelX) - 4,
+            labelX.uppercase(),
+            width - labelMetrics.stringWidth(labelX) - 8,
             axisYPos - 4
         )
 
         g.drawString(
-            labelY,
-            axisXPos - labelMetrics.stringWidth(labelY) - 4,
-            fontSize * 2 - 8
+            labelY.uppercase(),
+            axisXPos - labelMetrics.stringWidth(labelY) - 8,
+            fontSize * 2 - 4
         )
     }
 
@@ -235,8 +239,7 @@ class GraphModule(
     private fun gridStep(range: Double): Double {
         val absRange = abs(range)
         return when {
-            absRange <= 1.0 -> 0.1
-            absRange <= 2.0 -> 0.2
+            absRange <= 2.0 -> 0.5
             absRange <= 10.0 -> 1.0
             absRange <= 20.0 -> 1.0
             absRange <= 50.0 -> 5.0
